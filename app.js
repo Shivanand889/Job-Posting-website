@@ -1,5 +1,9 @@
 const express = require('express');
+
+const pgRouter = require('./databases/postgres.js');
 const app = express();
+
+app.use('/pg', pgRouter);
 
 app.get('/',(req,res)=>{
     res.send('<h1>Hello World</h1>')
