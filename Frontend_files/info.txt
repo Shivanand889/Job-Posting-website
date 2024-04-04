@@ -1,1 +1,3 @@
-
+New files are added index.html and styles.css and that further will be extended to the include the files 
+1. to see the post of the particular company
+2. 
