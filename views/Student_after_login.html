@@ -1,0 +1,277 @@
+<!-- This is the home page after login for the student where he can search for the posts
+the redirecting pages are 
+1. to see the post details of the post by company -->
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="Student_after_login.css">
+
+      <title>Student</title>
+   </head>
+   <body>
+      <!--==================== HEADER ====================-->
+      <header class="header">
+         <section class="flex">
+
+            <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
+            <a href="#" class="logo">
+               <i class="fa-solid fa-briefcase"></i>
+               Job Search portal
+            </a>
+            <nav class="navbar">
+               <a href="#">Home</a>
+               <a href="#">about</a>
+               <a href="#">Jobs</a>
+               <a href="#">contact us</a>
+               <div class="btn dropdown" style="margin-top: 0;">
+                  <!-- <button class="dropbtn">Dropdown</button> -->
+                  <i class="fa-regular fa-user"></i>
+                  <div class="dropdown-content">
+                    <a href="#">Dashboard</a>
+                    <a href="#">Your Profile</a>
+                    <a href="#">Your Profile</a>
+                  </div>
+                </div>
+            </nav>
+            
+         </section>
+
+      </header>
+      <!-- Job filter -->
+      <section class="job-filter">
+         <h1 class="heading">
+            filter jobs
+         </h1>
+         <form action="" method="post">
+            <div class="flex">
+               <div class="box">
+                  <p>job title <span>*</span></p>
+                  <input type="text" name="title" placeholder="keyword, category or company" required maxlength="20" class="input">
+               </div>
+               <div class="box">
+                  <p>job location</p>
+                  <input type="text" name="location" placeholder="city, state or country" required maxlength="50" class="input">
+               </div>
+               <div class="dropdown-container">
+                  <div class="dropdown_new">
+                     <input type="text" readonly placeholder="date posted" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">today</p>
+                        <p class="items">3 days ago</p>
+                        <p class="items">7 days ago</p>
+                        <p class="items">15 days ago</p>
+
+                     </div>
+                  </div>
+
+                  <div class="dropdown_new">
+                     <input type="text" readonly placeholder="Estimated Salary" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">less than or equal to 6LPA</p>
+                        <p class="items">6-15 LPA</p>
+                        <p class="items">15-30 LPA</p>
+                        <p class="items">30-60 LPA</p>
+                        <p class="items">60-75 LPA</p>
+                        <p class="items">75-90 LPA</p>
+                     </div>
+                  </div>
+
+                  <div class="dropdown_new">
+                     <input type="text" readonly placeholder="Job type" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">Full-time</p>
+                        <p class="items">Part-time</p>
+                        <p class="items">Internship</p>
+                        <p class="items">Contract</p>
+                        <p class="items">Temporary</p>
+                        <p class="items">Fresher</p>
+                     </div>
+                  </div>
+
+
+                  <div class="dropdown_new">
+                     <input type="text" readonly placeholder="Skills" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">Competitive Programming</p>
+                        <p class="items">Frontend </p>
+                        <p class="items">Backend</p>
+                        <p class="items">Strong analytical skills</p>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+         </form>
+
+      </section>
+
+      <section class="job-container">
+         <h1 class="heading">Latest Jobs</h1>
+         <div class="box-container">
+            <div class="box">
+               <div class="company">
+                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                  <div>
+                     <h3>IT Google</h3>
+                     <p>2 days ago</p>
+                  </div>
+               </div>
+               <h3 class="job-title">Software Developer</h3>
+               <p class="location"><i class="fa-solid fa-location-dot"></i><span>Bengalore,India</span></p>
+               <div class="tags">
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span>8LPA</span></p>
+                  <p><i class="fa-solid fa-briefcase"></i><span>Full-time</span></p>
+                  
+               </div>
+               <div class="flex_btn">
+                  <a href="view_job.html" class="btn">view details</a>
+                  <button type="submit" class="far fa-heart"></button>
+               </div>
+            </div>
+            <div class="box">
+               <div class="company">
+                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                  <div>
+                     <h3>IT Google</h3>
+                     <p>2 days ago</p>
+                  </div>
+               </div>
+               <h3 class="job-title">Software Developer</h3>
+               <p class="location"><i class="fa-solid fa-location-dot"></i><span>Bengalore,India</span></p>
+               <div class="tags">
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span>8LPA</span></p>
+                  <p><i class="fa-solid fa-briefcase"></i><span>Full-time</span></p>
+                  
+               </div>
+               <div class="flex_btn">
+                  <a href="view_job.html" class="btn">view details</a>
+                  <button type="submit" class="far fa-heart"></button>
+               </div>
+            </div>
+            <div class="box">
+               <div class="company">
+                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                  <div>
+                     <h3>IT Google</h3>
+                     <p>2 days ago</p>
+                  </div>
+               </div>
+               <h3 class="job-title">Software Developer</h3>
+               <p class="location"><i class="fa-solid fa-location-dot"></i><span>Bengalore,India</span></p>
+               <div class="tags">
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span>8LPA</span></p>
+                  <p><i class="fa-solid fa-briefcase"></i><span>Full-time</span></p>
+                  
+               </div>
+               <div class="flex_btn">
+                  <a href="view_job.html" class="btn">view details</a>
+                  <button type="submit" class="far fa-heart"></button>
+               </div>
+            </div>
+         </div>
+         
+         <div style="text-align: center; margin-top: 2rem;">
+            <a href="jobs.html" class="btn">View All</a>
+         </div>
+      </section>
+
+      <!-- The below code is of the view company first see the job and then click on the job the view job part will come 
+      and then after view job the part come is the  -->
+      <!-- <section class="view-company">
+         <h1 class="heading">Company Details</h1>
+         <div class="details">
+            <div class="info">
+               <img src="data:image/png;base64,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" alt="">
+               <h3>IT Google</h3>
+               <p><i class="fa-solid fa-location-dot"></i>Bangalore,India</p>
+            </div>
+
+            <div class="description">
+               <h3>About Company</h3>
+               <p>The random things you can put ------------------------------------------------------------------
+                  -----------------------------------------------------------------------------------------
+               </p>
+            </div>
+
+            <ul>
+               <li>X Jobs are posted</li>
+               <li>1000+ Employees are working</li>
+            </ul>
+         </div>
+
+      </section> -->
+
+
+
+
+
+
+
+
+
+
+
+
+      <!--==================== MAIN ====================-->
+      <!-- The below code is for the search job thing not like by only job title and location that we can put on the 
+      home page maybe . -->
+      <!-- <div class="home-container">
+         <section class="home">
+
+            <form action="" method="post">
+               <h3>Find your next job</h3>
+               <p>Job title <span>*</span> </p>
+               <input type="text" name="title" placeholder="keyword, category or company" required maxlength="20" class="input">
+               <p>job location</p>
+               <input type="text" name="location" placeholder="city, state or country" required maxlength="50" class="input">
+               <input type="submit" value="search job"  name="search" class="btn">
+            </form>
+         </section>
+
+      </div> -->
+
+
+
+
+
+      <footer class="footer">
+         <section class="grid">
+               <div class="box">
+                  <h3>Quick Links</h3>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>Home</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>about</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>All jobs</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>contact us</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>Filter search</a>
+               </div>
+
+               <div class="box">
+                  <h3>extra links</h3>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>account</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>login</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>register</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>dashboard</a>
+               </div>
+
+               <div class="box">
+                  <h3>Follow us</h3>
+                  <a href="#"><i class="fa-brands fa-instagram"></i>instagram</a>
+                  <a href="#"><i class="fa-brands fa-facebook"></i>facebook</a>
+                  <a href="#"><i class="fa-brands fa-x-twitter"></i>Twitter</a>
+               </div>
+
+         </section>
+      </footer>
+      
+
+      <!--=============== MAIN JS ===============-->
+      <!-- <script src="assets/js/main.js"></script> -->
+   </body>
+</html>
