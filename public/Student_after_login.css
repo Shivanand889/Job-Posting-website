@@ -266,6 +266,42 @@ section{
   font-size: 1.8rem;
   color: var(--black);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+  /* padding: 0 15px; */
+  /* border-radius: 8px; */
+}
+
+.job-filter form .dropdown-container .dropdown_new .lists .items:hover{
+  background-color: var(--white) ;
+}
+/* last two lines in the above is added for the checkbox in the dropdown menu , and whole 
+below is for the same like for the checkbox */
+.job-filter form .dropdown-container .dropdown_new .lists .items .checkbox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  width: 16px;
+  border: 1.5px solid var(--black);
+  border-radius: 4px;
+  margin-right: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.job-filter form .dropdown-container .dropdown_new .lists .items .checkbox .check-icon{
+  font-size: 11px;
+  transform: scale(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.job-filter form .dropdown-container .dropdown_new .lists .items.checked .check-icon{
+  transform: scale(1);
+}
+.items.checked .checkbox{
+  background-color: var(--main-color);
 }
 
 .job-filter form .dropdown-container .dropdown_new .lists .items:hover{
