@@ -16,7 +16,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-
+// req.session.jobs = NULL ;
 
 function hashPassword(password) {
     const hash = crypto.createHash('sha256');
@@ -29,8 +29,8 @@ const db = new pg.Client({
     user: "postgres",
     host: "localhost",
     database: "dbms_project",
-    password: "password", // add your password
-    port: 5432
+    password: "Shiva#$098", // add your password
+    port: 4000
 });
 db.connect() ;
 
@@ -44,6 +44,79 @@ app.get('/',(req,res)=>{
     }
     res.render('login.ejs' , {login : a}) ;
 });
+app.get('/jobDescription', async(req,res)=>{
+    var id = req.query.jobId ;
+    console.log(id) ;
+    const q = `SELECT c.company_name,
+    jp.id AS job_post_id,
+    jp.job_description,
+    jp.salary,
+    jp.created_date ,
+    jp.last_date ,
+    jp.currency,
+    jp.job_type,
+    jp.title ,
+    ARRAY_AGG(DISTINCT jl.city) AS city,
+    ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
+    ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
+    FROM Company c
+    JOIN Job_post jp ON c.id = jp.company_id
+    LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
+    LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
+    and ss.isCompany = 1 where  jp.id = ${id}
+    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency ` ;
+    const q1 = `select email from user_account 
+                join job_post_activity on user_account.id= job_post_activity.user_account_id
+                where  user_account.email= $1 and job_post_activity.job_post_id = $2` ;
+    try {
+        console.log(req.session.email)
+        const result = await db.query(q);
+        const result1 = await db.query(q1 ,[req.session.email,id]);
+        // console.log(1) ;
+        // console.log(result1) ;
+        req.session.jobs = result ;
+        res.render('view_job.ejs' , {jobs : result , count : result1.rowCount} ) ;
+    } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error) ;
+        return res.status(500).send("Internal Server Error");
+    }
+   
+});
+app.get('/jobSeekerfilters',async (req,res)=>{
+    
+    const query = `SELECT c.company_name,
+                    jp.id AS job_post_id,
+                    jp.job_description,
+                    jp.salary,
+                    jp.created_date ,
+                    jp.last_date ,
+                    jp.currency,
+                    jp.job_type,
+                    jp.title ,
+                    ARRAY_AGG(DISTINCT jl.city) AS city,
+                    ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
+                    ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
+                    FROM Company c
+                    JOIN Job_post jp ON c.id = jp.company_id
+                    LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
+                    LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
+                    and ss.isCompany = 1
+                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency ` ;
+ 
+        try {
+            const result = await db.query(query);
+            // console.log(result) ;
+            req.session.jobs = result ;
+            res.render('Student_after_login.ejs' , {jobs : result} ) ;
+        } catch (error) {
+        // console.error("Error checking email:", error);
+        console.log(error) ;
+            return res.status(500).send("Internal Server Error");
+        }
+
+});
+
 app.post('/login', async(req,res)=>{
     const email = req.body.email ;
     var password = req.body.password ;
@@ -58,7 +131,19 @@ app.post('/login', async(req,res)=>{
                 if(result.rows[0].password == password){
                     console.log('exists') ;
                     req.session.login = 1 ;
-                    return res.redirect('/') ;
+                    
+                    req.session.email= email ;
+                    // console.log(email) ;
+                    // console.log(req.session.email) ;
+                    if(result.rows[0].account_type == 1){
+                        // console.log(1) ;
+                        
+                        res.redirect("jobSeekerfilters") ;
+                    }
+                    else{
+                        // console.log(2) ;
+                        return res.redirect('/') ;
+                    }
                 }
                 else{
                     req.session.login = 0 ;
@@ -81,7 +166,8 @@ app.post('/signup', async (req,res)=>{
     const dob = req.body.dob;
     const gender = req.body.gender;
     let account_type;
-    if (req.body.account_type === 'Job Seeker') {
+    console.log(req.body.account_type)  ;
+    if (req.body.account_type == 'Job Seeker') {
         account_type = 1;
     } else {
         account_type = 2;
@@ -109,12 +195,102 @@ app.post('/signup', async (req,res)=>{
     try {
         await db.query(insertQuery, insertValues);
         console.log("Successfully inserted");
-        return res.redirect('back');
+        if(account_type == 1){
+            req.session.email= email ;
+           return  res.redirect("jobSeekerfilters") ;
+        }
+        else{
+            return res.redirect('back');
+        }
+        
     } catch (error) {
         console.error("Error inserting user:", error);
         return res.status(500).send("Internal Server Error");
     }
     
+}) ;
+app.post('/filters',async(req,res)=>{
+    //console.log(1) ;
+    const skill = req.body.skills.split(',');
+    const location = req.body.location.split(',');
+    const company = req.body.company.split(',');
+    const type = req.body.type.split(',');
+    const salary = req.body.salary.split(',');
+
+    let query = `
+        SELECT c.company_name,
+               jp.id AS job_post_id,
+               jp.job_description,
+               jp.salary,
+               jp.created_date,
+               jp.last_date,
+               jp.currency,
+               jp.job_type,
+               jp.title,
+               ARRAY_AGG(DISTINCT jl.city) AS city,
+               ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
+               ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
+        FROM Company c
+        JOIN Job_post jp ON c.id = jp.company_id
+        LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
+        LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
+                                  AND ss.isCompany = 1
+        `;
+
+    // Add filtering conditions
+    let conditions = [];
+    if (skill[0] !== '') {
+        conditions.push(`LOWER(ss.skill_name) IN (${skill.map(s => `'${s.toLowerCase()}'`).join(', ')})`);
+    }
+    if (location[0] !== '') {
+        conditions.push(`LOWER(jl.city) IN (${location.map(l => `'${l.toLowerCase()}'`).join(', ')})`);
+    }
+    if (company[0] !== '') {
+        conditions.push(`LOWER(c.company_name) IN (${company.map(c => `'${c.toLowerCase()}'`).join(', ')})`);
+    }
+    if (type[0] !== '') {
+        conditions.push(`LOWER(jp.job_type) IN (${type.map(t => `'${t.toLowerCase()}'`).join(', ')})`);
+    }
+    if (salary[0] !== '') {
+        conditions.push(`jp.salary > ${Math.max(...salary)}`); // Assuming salary is a single value
+    }
+
+    if (conditions.length > 0) {
+        query += ' WHERE ' + conditions.join(' AND ');
+    }
+
+    query += `
+        GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency
+    `;
+
+    try {
+        const result = await db.query(query);
+        res.send({ jobs: result.rows });
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).send('Internal Server Error');
+    }
+    
+}) ;
+app.post('/apply' , async(req,res)=>{
+    id = req.query.jobId ;
+    const q = `insert into job_post_activity (user_account_id , job_post_id)
+                values($1 , $2)` ;
+    const q1 = `select id from user_account where email =  $1` ;
+    try {
+        // console.log(req.session.email)
+        const result1 = await db.query(q1 ,[req.session.email]);
+        await db.query(q,[result1.rows[0].id, id]);
+        
+        // console.log(1) ;
+        // console.log(result1) ;
+        // req.session.jobs = result ;
+        res.redirect(`/jobDescription?jobId=${id}`) ;
+    } catch (error) {
+    // console.error("Error checking email:", error);
+        console.log(error) ;
+        return res.status(500).send("Internal Server Error");
+    }
 }) ;
 app.listen(3000 , function(){
     console.log('Server start succesfully');

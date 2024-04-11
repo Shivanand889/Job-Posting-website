@@ -1,0 +1,400 @@
+<!-- This is the home page after login for the student where he can search for the posts
+the redirecting pages are 
+1. to see the post details of the post by company -->
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="Student_after_login.css">
+
+      <title>Student</title>
+   </head>
+   <body>
+      
+        <% function time(date) { %>
+         <%  var currentDate = new Date();%>
+           <%  var dateMilliseconds = date.getTime();%>
+           <%  var currentMilliseconds = currentDate.getTime();%>
+           <%  var timeDifference = currentMilliseconds - dateMilliseconds;%>
+           <%  var differenceInDays = Math.floor(timeDifference / (1000 * 3600 * 24));%>
+           <%  var differenceInMonths = Math.floor(differenceInDays / 30);%>
+         
+           <%  if (differenceInDays < 1) {%>
+            <%      return "today"; %>
+            <%  } else if (differenceInDays < 30) {%>
+            <%      return differenceInDays + " days ago";%>
+            <% } else if (differenceInMonths < 12) {%>
+            <%      return differenceInMonths + " month ago";%>
+            <%  } else { %>
+            <%    return date.toDateString();%>
+            <% }%>
+            <%}%>
+         
+      <!--==================== HEADER ====================-->
+      <header class="header">
+         <section class="flex">
+
+            <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
+            <a href="#" class="logo">
+               <i class="fa-solid fa-briefcase"></i>
+               Job Search portal
+            </a>
+            <nav class="navbar">
+               <a href="#">Home</a>
+               <a href="#">about</a>
+               <a href="#">Jobs</a>
+               <a href="#">contact us</a>
+               <div class="btn dropdown" style="margin-top: 0;">
+                  <!-- <button class="dropbtn">Dropdown</button> -->
+                  <i class="fa-regular fa-user"></i>
+                  <div class="dropdown-content">
+                    <a href="#">Dashboard</a>
+                    <a href="#">Your Profile</a>
+                    <a href="#">Your Profile</a>
+                  </div>
+                </div>
+            </nav>
+            
+         </section>
+
+      </header>
+      <!-- Job filter -->
+      <section class="job-filter">
+         <h1 class="heading">
+            filter jobs
+         </h1>
+         <form action="" method="post">
+            <div class="flex">
+               <div class="box">
+                  <!-- <p>job title <span>*</span></p> -->
+                  <div class="dropdown-container" >
+                  <div class="dropdown_new" id = "company">
+                     <input type="text" readonly placeholder="company" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">
+                           <span class="checkbox">
+                              <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Amazon">
+                           </span>
+                           Amazon
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "JP Morgan Chase">
+                           </span>
+                              JP Morgan Chase
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Google">
+                           </span>
+                           Google
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Netflix">
+                           </span>
+                           Netflix
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Flipkart">
+                           </span>
+                           Flipkart
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Apple">
+                           </span>
+                           Apple
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               </div>
+               <div class="box">
+                  <div class="dropdown-container" >
+                     <div class="dropdown_new" id = "location">
+                        <input type="text" readonly placeholder="Location" name="date" maxlength="20" class="output">
+                        <div class="lists">
+                           <p class="items">
+                              <span class="checkbox">
+                                 <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Bangalore">
+                              </span>
+                              Bangalore 
+                           </p>
+                           <p class="items">
+                              <span class="checkbox">
+                                 <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Mountain View">
+                              </span>
+                                 Mountain View
+                           </p>
+                           <p class="items">
+                              <span class="checkbox">
+                                 <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "New York">
+                              </span>
+                              New York
+                           </p>
+                           
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="dropdown-container">
+                  <div class="dropdown_new" id = "date">
+                     <input type="text" readonly placeholder="date posted" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">today</p>
+                        <p class="items">3 days ago</p>
+                        <p class="items">7 days ago</p>
+                        <p class="items">15 days ago</p>
+
+                     </div>
+                  </div>
+
+                  <div class="dropdown_new" id = "salary">
+                     <input type="text" readonly placeholder="salary per month" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">
+                           <span class="checkbox">
+                              <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "500">
+                           </span>
+                           >500
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "800">
+                           </span>
+                              >800
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "1000">
+                           </span>
+                           >1000
+                        </p>
+                        
+                     </div>
+                  </div>
+
+                  <div class="dropdown_new" id = "type">
+                     <input type="text" readonly placeholder="Job type" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items">
+                           <span class="checkbox">
+                              <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Full-time">
+                           </span>
+                           Full-time
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "part-time">
+                           </span>
+                              part-time
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "intern">
+                           </span>
+                           Internship
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Contract">
+                           </span>
+                           Contract
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Temporary">
+                           </span>
+                           Temporary
+                        </p>
+                        <p class="items">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Fresher">
+                           </span>
+                           Fresher
+                        </p>
+                     </div>
+                  </div>
+
+
+                  <div class="dropdown_new" id = "skill">
+                     <input type="text" readonly placeholder="Skills" name="date" maxlength="20" class="output">
+                     <div class="lists">
+                        <p class="items" value = "Python">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Python">
+                           </span>
+                           Python 
+                        </p>
+                        <p class="items" value = "Frontend">
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Frontend">
+                           </span>
+                           Frontend 
+                        </p>
+                        <p class="items" value = "Backend" >
+                           <span class="checkbox">
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "C++">
+                           </span>
+                           C++
+                        </p>
+                        <p class="items" value = "Strong analytical skills" >
+                           <span class="checkbox" >
+                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Java">
+                           </span>
+                           Java 
+                        </p>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+         </form>
+
+      </section>
+
+      <section class="job-container" id="jobContainer">
+         <h1 class="heading">Latest Jobs</h1>
+         <% for (let i =0 ;i <jobs.rows.length ;i=i+3) {%>
+         <div class="box-container" id  = "box-container">
+            
+            <div class="box">
+               <div class="company">
+                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                  <div>
+                     <h3><%=jobs.rows[i].company_name%></h3>
+                     <% let a = time(jobs.rows[i].created_date) %>
+                     <p><%=a%></p>
+                  </div>
+               </div>
+               <h3 class="job-title"><%=jobs.rows[i].title%></h3>
+               <p class="location"><i class="fa-solid fa-location-dot"></i><span>
+                  <% for(let j = 0 ; j<jobs.rows[i].city.length ;j++){%>
+                  <%=jobs.rows[i].city[j]%>
+               <%}%>
+               <div class="tags">
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i].salary%></span></p>
+                  <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i].job_type%></span></p>
+                  
+               </div>
+               <div class="flex_btn">
+                  <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id; %>
+                  <a href=<%=v%> class="btn">view details</a>
+                  <button type="submit" class="far fa-heart"></button>
+               </div>
+            </div>
+            <%if(i+1<jobs.rowCount){%>
+            <div class="box">
+               <div class="company">
+                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                  <div>
+                     <h3><%=jobs.rows[i+1].company_name%></h3>
+                     <% let a = time(jobs.rows[i+1].created_date) %>
+                     <p><%=a%></p>
+                  </div>
+               </div>
+               <h3 class="job-title"><%=jobs.rows[i+1].title%></h3>
+               <p class="location"><i class="fa-solid fa-location-dot"></i><span>
+                  <% for(let j = 0 ; j<jobs.rows[i+1].city.length ;j++){%>
+                     <%=jobs.rows[i+1].city[j]%>
+                  <%}%>
+               </span></p>
+               <div class="tags">
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+1].salary%></span></p>
+                  <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+1].job_type%></span></p>
+                  
+               </div>
+
+               <div class="flex_btn">
+                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id; %>
+                  <a href=<%=v%> class="btn">view details</a>
+                  <button type="submit" class="far fa-heart"></button>
+               </div>
+            </div>
+            <%}%>
+            <%if(i+2<jobs.rowCount){%>
+               <div class="box">
+                  <div class="company">
+                     <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                     <div>
+                        <h3><%=jobs.rows[i+2].company_name%></h3>
+                        <% let a = time(jobs.rows[i+2].created_date) %>
+                        <p><%=a%></p>
+                     </div>
+                  </div>
+                  <h3 class="job-title"><%=jobs.rows[i+2].title%></h3>
+                  <p class="location"><i class="fa-solid fa-location-dot"></i><span>
+                     <% for(let j = 0 ; j<jobs.rows[i+2].city.length ;j++){%>
+                     <%=jobs.rows[i+2].city[j]%>
+                  <%}%>
+                     </span></p>
+                  <div class="tags">
+                     <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+2].salary%></span></p>
+                     <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+2].job_type%></span></p>
+                     
+                  </div>
+   
+                  <div class="flex_btn">
+                     <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id; %>
+                     <a href=<%=v%> class="btn">view details</a>
+                     <button type="submit" class="far fa-heart"></button>
+                  </div>
+               </div>
+               <%}%>
+         
+      </div>
+         
+         <%}%>
+      <!-- </div> -->
+      <div style="text-align: center; margin-top: 2rem;">
+
+            <a href="jobs.html" class="btn">View All</a>
+         </div>
+      </section>
+
+      
+
+      <footer class="footer">
+         <section class="grid">
+               <div class="box">
+                  <h3>Quick Links</h3>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>Home</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>about</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>All jobs</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>contact us</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>Filter search</a>
+               </div>
+
+               <div class="box">
+                  <h3>extra links</h3>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>account</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>login</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>register</a>
+                  <a href="#"><i class="fa-solid fa-angle-right"></i>dashboard</a>
+               </div>
+
+               <div class="box">
+                  <h3>Follow us</h3>
+                  <a href="#"><i class="fa-brands fa-instagram"></i>instagram</a>
+                  <a href="#"><i class="fa-brands fa-facebook"></i>facebook</a>
+                  <a href="#"><i class="fa-brands fa-x-twitter"></i>Twitter</a>
+               </div>
+
+         </section>
+      </footer>
+      
+
+      <!--=============== MAIN JS ===============-->
+      <!-- <script src="assets/js/main.js"></script> -->
+      
+   </body>
+   <script src="Student_after_login.js"></script>
+</html>
