@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Post</title>
+    <script src="https://kit.fontawesome.com/427a1571ad.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../public/jobpost.css">
+</head>
+
+<body>
+
+    <div class="contact-container" >
+        <div class="contact-div">
+            <div class="contact-form">
+                <span class="circle one"></span><span class="circle two"></span>
+                <form action="">
+                    <h3 class="contact-title">Post a Job</h3>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label >Company Name</label>
+                            <input type="text" placeholder="Enter your Company name" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Job Type</label>
+                            <select type="option" placeholder="Select Job Type" required>
+                                <option class="gender" value="" disabled selected >Select Job Type</option>
+                                <option value="male">Full Time</option>
+                                <option value="female">Part Time</option>
+                                <option value="other">Intern</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label >Job Description</label>
+                            <input type="text" placeholder="Enter job description" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label >Stipend / Salary</label>
+                            <input type="tel" placeholder="Enter stipend or salary" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Last Date</label>
+                            <input type="date" placeholder="Enter last date" required>
+                        </div>
+                        <button class="btn contact-btn">Post Job</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+</html>
