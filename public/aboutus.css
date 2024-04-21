@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none;
+    border: none;
+  }
+
+  body{
+    background-color: #f8f8f8;
+  }
+
+  .hero{
+
+    overflow: hidden;
+  }
+
+  .heading h1{
+    color: #5995fd;
+    font-size: 55px;
+    text-align: center;
+    margin-top: 35px;
+  }
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 65px auto;
+}
+
+.hero-content{
+  flex: 1;
+  width: 600px;
+  margin: 0px 25px;
+}
+
+.hero-content h2{
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.hero-content p{
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+
+.hero-image{
+  flex: 1;
+  width: 600px;
+  margin: auto;
+}
+
+img{
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+
+  .btn{
+    width: 150px;
+    height: 49px;
+    margin: 10px 0;
+    border: none;
+    outline: none;
+    border-radius: 49px;
+    cursor: pointer;
+    background-color: #5995fd;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: .5s;
+}
+
+.btn:hover{
+    background-color: #fff;
+    color: #5995fd;
+    border: 2px solid #5995fd;
+    /* transform: scale(1); */
+} 

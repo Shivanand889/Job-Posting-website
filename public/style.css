@@ -179,6 +179,23 @@ form.sign-up-form{
     
 }
 
+.input-field input[type="date"]{
+  color: #aaa;
+}
+
+.input-field input[type = "date"]:valid{
+  color: #333;
+}
+
+.input-field select[type="option"]{
+  color: #aaa;
+}
+
+.input-field select[type = "option"]:valid{
+  color: #333;
+}
+
+
  .btn{
     width: 150px;
     height: 49px;
