@@ -48,7 +48,8 @@ the redirecting pages are
             <nav class="navbar">
                <a href="#">Home</a>
                <a href="#">about</a>
-               <a href="#">Jobs</a>
+               <% let v = '/appliedJobs?id=' +id; %>
+               <a href=<%=v%>>Jobs</a>
                <a href="#">contact us</a>
                <div class="btn dropdown" style="margin-top: 0;">
                   <!-- <button class="dropbtn">Dropdown</button> -->
@@ -356,7 +357,7 @@ the redirecting pages are
       <!-- </div> -->
       <div style="text-align: center; margin-top: 2rem;">
 
-            <a href="jobs.html" class="btn">View All</a>
+            <a href="/viewAllJobs" class="btn">View All</a>
          </div>
       </section>
 

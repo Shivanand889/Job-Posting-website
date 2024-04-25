@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="Student_after_login.css">
+
+    <title>All Posts by {Compary name}</title>
+</head>
+<body>
+
+    <header class="header">
+        <section class="flex">
+
+           <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
+           <a href="#" class="logo">
+              <i class="fa-solid fa-briefcase"></i>
+              Job Search portal
+           </a>
+           <nav class="navbar">
+              <a href="#">Home</a>
+              <a href="#">about</a>
+              <a href="#">Jobs</a>
+              <a href="#">contact us</a>
+           </nav>
+        </section>
+
+     </header>
+     <% function time(date) { %>
+      <%  var currentDate = new Date();%>
+        <%  var dateMilliseconds = date.getTime();%>
+        <%  var currentMilliseconds = currentDate.getTime();%>
+        <%  var timeDifference = currentMilliseconds - dateMilliseconds;%>
+        <%  var differenceInDays = Math.floor(timeDifference / (1000 * 3600 * 24));%>
+        <%  var differenceInMonths = Math.floor(differenceInDays / 30);%>
+      
+        <%  if (differenceInDays < 1) {%>
+         <%      return "today"; %>
+         <%  } else if (differenceInDays < 30) {%>
+         <%      return differenceInDays + " days ago";%>
+         <% } else if (differenceInMonths < 12) {%>
+         <%      return differenceInMonths + " month ago";%>
+         <%  } else { %>
+         <%    return date.toDateString();%>
+         <% }%>
+         <%}%>
+     <section class="job-container" id="jobContainer">
+      <h1 class="heading">Latest Jobs</h1>
+      <% for (let i =0 ;i <jobs.rows.length ;i=i+3) {%>
+      <div class="box-container" id  = "box-container">
+         
+         <div class="box">
+            <div class="company">
+               <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+               <div>
+                  <h3><%=jobs.rows[i].company_name%></h3>
+                  <% let a = time(jobs.rows[i].created_date) %>
+                  <p><%=a%></p>
+               </div>
+            </div>
+            <h3 class="job-title"><%=jobs.rows[i].title%></h3>
+            <p class="location"><i class="fa-solid fa-location-dot"></i><span>
+               <% for(let j = 0 ; j<jobs.rows[i].city.length ;j++){%>
+               <%=jobs.rows[i].city[j]%>
+            <%}%>
+            <div class="tags">
+               <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i].salary%></span></p>
+               <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i].job_type%></span></p>
+               
+            </div>
+            <div class="flex_btn">
+               <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id; %>
+               <a href=<%=v%> class="btn">view details</a>
+               <button type="submit" class="far fa-heart"></button>
+            </div>
+         </div>
+         <%if(i+1<jobs.rowCount){%>
+         <div class="box">
+            <div class="company">
+               <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+               <div>
+                  <h3><%=jobs.rows[i+1].company_name%></h3>
+                  <% let a = time(jobs.rows[i+1].created_date) %>
+                  <p><%=a%></p>
+               </div>
+            </div>
+            <h3 class="job-title"><%=jobs.rows[i+1].title%></h3>
+            <p class="location"><i class="fa-solid fa-location-dot"></i><span>
+               <% for(let j = 0 ; j<jobs.rows[i+1].city.length ;j++){%>
+                  <%=jobs.rows[i+1].city[j]%>
+               <%}%>
+            </span></p>
+            <div class="tags">
+               <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+1].salary%></span></p>
+               <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+1].job_type%></span></p>
+               
+            </div>
+
+            <div class="flex_btn">
+               <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id; %>
+               <a href=<%=v%> class="btn">view details</a>
+               <button type="submit" class="far fa-heart"></button>
+            </div>
+         </div>
+         <%}%>
+         <%if(i+2<jobs.rowCount){%>
+            <div class="box">
+               <div class="company">
+                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
+                  <div>
+                     <h3><%=jobs.rows[i+2].company_name%></h3>
+                     <% let a = time(jobs.rows[i+2].created_date) %>
+                     <p><%=a%></p>
+                  </div>
+               </div>
+               <h3 class="job-title"><%=jobs.rows[i+2].title%></h3>
+               <p class="location"><i class="fa-solid fa-location-dot"></i><span>
+                  <% for(let j = 0 ; j<jobs.rows[i+2].city.length ;j++){%>
+                  <%=jobs.rows[i+2].city[j]%>
+               <%}%>
+                  </span></p>
+               <div class="tags">
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+2].salary%></span></p>
+                  <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+2].job_type%></span></p>
+                  
+               </div>
+
+               <div class="flex_btn">
+                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id; %>
+                  <a href=<%=v%> class="btn">view details</a>
+                  <button type="submit" class="far fa-heart"></button>
+               </div>
+            </div>
+            <%}%>
+      
+   </div>
+      
+      <%}%>
+   <!-- </div> -->
+   <!-- <div style="text-align: center; margin-top: 2rem;">
+
+         <a href="/viewAllJobs" class="btn">View All</a>
+      </div> -->
+   </section>
+
+    <footer class="footer">
+        <section class="grid">
+              <div class="box">
+                 <h3>Quick Links</h3>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>Home</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>about</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>All jobs</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>contact us</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>Filter search</a>
+              </div>
+
+              <div class="box">
+                 <h3>extra links</h3>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>account</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>login</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>register</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i>dashboard</a>
+              </div>
+
+              <div class="box">
+                 <h3>Follow us</h3>
+                 <a href="#"><i class="fa-brands fa-instagram"></i>instagram</a>
+                 <a href="#"><i class="fa-brands fa-facebook"></i>facebook</a>
+                 <a href="#"><i class="fa-brands fa-x-twitter"></i>Twitter</a>
+              </div>
+
+        </section>
+     </footer>
+    
+</body>
+</html>

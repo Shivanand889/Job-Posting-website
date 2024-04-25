@@ -83,6 +83,38 @@ app.get("/jobDescription", async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 });
+
+app.get("/viewAllJobs", async(req,res)=>{
+  const query = `SELECT c.company_name,
+                    jp.id AS job_post_id,
+                    jp.job_description,
+                    jp.salary,
+                    jp.created_date ,
+                    jp.last_date ,
+                    jp.job_type,
+                    jp.title ,
+                    ARRAY_AGG(DISTINCT jl.city) AS city,
+                    ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
+                    ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
+                    FROM Company c
+                    JOIN Job_post jp ON c.company_name = jp.company_name
+                    LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
+                    LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
+                    and ss.isCompany = 1
+                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
+
+  try {
+    const result = await db.query(query);
+    // console.log(result) ;
+    req.session.jobs = result;
+    res.render("viewall.ejs", { jobs: result });
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+  // res.render("viewall.ejs");
+});
 app.get("/jobSeekerfilters", async (req, res) => {
   const query = `SELECT c.company_name,
                     jp.id AS job_post_id,
@@ -106,7 +138,12 @@ app.get("/jobSeekerfilters", async (req, res) => {
     const result = await db.query(query);
     // console.log(result) ;
     req.session.jobs = result;
-    res.render("Student_after_login.ejs", { jobs: result });
+    const q = 'select id from user_account where email = $1' ;
+    var val = [req.session.email] ;
+    const result1 = await db.query(q,val);
+    // console.log(1) ; 
+    // console.log(result1) ; 
+    res.render("Student_after_login.ejs", { jobs: result, id :result1.rows[0].id });
   } catch (error) {
     // console.error("Error checking email:", error);
     console.log(error);
@@ -114,6 +151,48 @@ app.get("/jobSeekerfilters", async (req, res) => {
   }
 });
 
+app.get("/appliedJobs", async(req,res)=>{
+  var id = req.query.id ;
+  console.log(id) ;
+  const query = `SELECT c.company_name,
+                    jp.id AS job_post_id,
+                    jp.job_description,
+                    jp.salary,
+                    jp.created_date ,
+                    jp.last_date ,
+                    jp.job_type,
+                    jp.title ,
+                    ARRAY_AGG(DISTINCT jl.city) AS city,
+                    ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
+                    ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
+                    FROM job_post_activity jpa
+                    JOIN Job_post jp ON jpa.job_post_id = jp.id
+                    JOIN company c ON c.company_name = jp.company_name
+                    
+                    LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
+                    LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
+                    and ss.isCompany = 1
+                    where jpa.user_account_id = $1 
+                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
+
+  try {
+    var val = [id] ;
+    const result = await db.query(query, val);
+    // console.log(result) ;
+    req.session.jobs = result;
+    // const q = 'select id from user_account where email = $1' ;
+    // var val = [req.session.email] ;
+    // const result1 = await db.query(q,val);
+    // console.log(1) ; 
+    // console.log(result1) ; 
+    res.render("job.ejs", { jobs: result});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+  // res.render("job.ejs") ;
+});
 app.get("/Recruiterfilters", async (req, res) => {
     console.log(req.session.email);
   const query = `SELECT c.company_name,
