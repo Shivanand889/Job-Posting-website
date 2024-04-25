@@ -30,9 +30,9 @@ module.exports = { hashPassword };
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "job",
-  password: "1023", // add your password
-  port: 5432,
+  database: "dbms_project",
+  password: "Shiva#$098", // add your password
+  port: 4000,
 });
 db.connect();
 
@@ -55,18 +55,17 @@ app.get("/jobDescription", async (req, res) => {
     jp.salary,
     jp.created_date ,
     jp.last_date ,
-    jp.currency,
     jp.job_type,
     jp.title ,
     ARRAY_AGG(DISTINCT jl.city) AS city,
     ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
     ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
     FROM Company c
-    JOIN Job_post jp ON c.id = jp.company_id
+    JOIN Job_post jp ON c.company_name = jp.company_name
     LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
     LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
     and ss.isCompany = 1 where  jp.id = ${id}
-    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency `;
+    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
   const q1 = `select email from user_account 
                 join job_post_activity on user_account.id= job_post_activity.user_account_id
                 where  user_account.email= $1 and job_post_activity.job_post_id = $2`;
@@ -91,18 +90,17 @@ app.get("/jobSeekerfilters", async (req, res) => {
                     jp.salary,
                     jp.created_date ,
                     jp.last_date ,
-                    jp.currency,
                     jp.job_type,
                     jp.title ,
                     ARRAY_AGG(DISTINCT jl.city) AS city,
                     ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
                     ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
                     FROM Company c
-                    JOIN Job_post jp ON c.id = jp.company_id
+                    JOIN Job_post jp ON c.company_name = jp.company_name
                     LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
                     LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
                     and ss.isCompany = 1
-                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency `;
+                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
 
   try {
     const result = await db.query(query);
@@ -122,17 +120,16 @@ app.get("/Recruiterfilters", async (req, res) => {
     jp.id AS job_post_id,
     jp.job_description,
     jp.salary,
-    jp.currency,
     jp.job_type,
     ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
     ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
     FROM Company c
-    JOIN Job_post jp ON c.id = jp.company_id
+    JOIN Job_post jp ON c.company_name = jp.company_name
     LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
     LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
     WHERE jp.posted_by_id = (select id from user_account where email = $1)
     and ss.isCompany = 1
-    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency;
+    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary;
                                                                 `;
     var mail =[ req.session.email];
   try {
@@ -166,18 +163,9 @@ app.post("/login", async (req, res) => {
           req.session.email = email;
           // console.log(email) ;
           // console.log(req.session.email) ;
-          if (result.rows[0].account_type == 1) {
-            // console.log(1) ;
-
+        
             res.redirect("jobSeekerfilters");
-          } else if (result.rows[0].account_type == 2) {
-            // console.log(2) ;
-
-            res.redirect("Recruiterfilters");
-          } else {
-            // console.log(2) ;
-            return res.redirect("/");
-          }
+          
         } else {
           req.session.login = 0;
           return res.redirect("/");
@@ -197,15 +185,8 @@ app.post("/signup", async (req, res) => {
   const password = hashPassword(req.body.password);
   const dob = req.body.dob;
   const gender = req.body.gender;
-  let account_type;
-  console.log(req.body.account_type);
-  if (req.body.account_type == "Job Seeker") {
-    account_type = 1;
-  } else {
-    account_type = 2;
-  }
   const number = req.body.contact;
-
+  const name = req.body.name;
   // Check if email already exists
   const emailCheckQuery = `SELECT * FROM user_account WHERE email = $1`;
   const emailCheckValues = [email];
@@ -221,21 +202,15 @@ app.post("/signup", async (req, res) => {
   }
 
   // Insert new user
-  const insertQuery = `INSERT INTO user_account (email, password, date_of_birth, gender, contact_number, account_type) 
+  const insertQuery = `INSERT INTO user_account (name,email, password, date_of_birth, gender, contact_number) 
                          VALUES ($1, $2, $3, $4, $5, $6)`;
-  const insertValues = [email, password, dob, gender, number, account_type];
+  const insertValues = [name, email, password, dob, gender, number];
   try {
     await db.query(insertQuery, insertValues);
     console.log("Successfully inserted");
-    if (account_type == 1) {
-      req.session.email = email;
+    
       return res.redirect("jobSeekerfilters");
-    } else if (account_type == 2) {
-      req.session.email = email;
-      return res.redirect("Recruiterfilters");
-    } else {
-      return res.redirect("back");
-    }
+   
   } catch (error) {
     console.error("Error inserting user:", error);
     return res.status(500).send("Internal Server Error");
@@ -256,14 +231,13 @@ app.post("/filters", async (req, res) => {
                jp.salary,
                jp.created_date,
                jp.last_date,
-               jp.currency,
                jp.job_type,
                jp.title,
                ARRAY_AGG(DISTINCT jl.city) AS city,
                ARRAY_AGG(DISTINCT CONCAT(jl.street_address, ', ', jl.city, ', ', jl.state, ', ', jl.country, ', ', jl.zip)) AS job_locations,
                ARRAY_AGG(DISTINCT ss.skill_name) AS job_skills
         FROM Company c
-        JOIN Job_post jp ON c.id = jp.company_id
+        JOIN Job_post jp ON c.company_name = jp.company_name
         LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
         LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
                                   AND ss.isCompany = 1
@@ -308,7 +282,7 @@ app.post("/filters", async (req, res) => {
   }
 
   query += `
-        GROUP BY c.company_name, jp.id, jp.job_description, jp.salary, jp.currency
+        GROUP BY c.company_name, jp.id, jp.job_description, jp.salary
     `;
 
   try {

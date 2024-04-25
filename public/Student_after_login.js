@@ -110,6 +110,7 @@ async function filters(checkedValues , checkedLocation ,checkedCompany , checked
         <div class="box-container" id="jobContainer">
       `;
       for (let j = i; j < Math.min(i + 3, jobs.length); j++) {
+        let v = '/jobDescription?jobId=' + jobs[j].job_post_id ;
         jobHtml += `
           <div class="box">
             <div class="company">
@@ -126,7 +127,7 @@ async function filters(checkedValues , checkedLocation ,checkedCompany , checked
               <p><i class="fa-solid fa-briefcase"></i><span>${jobs[j].job_type}</span></p>
             </div>
             <div class="flex_btn">
-              <a href="view_job.html" class="btn">view details</a>
+              <a href= ${v} class="btn">view details</a>
               <button type="submit" class="far fa-heart"></button>
             </div>
           </div>
