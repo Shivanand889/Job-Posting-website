@@ -37,6 +37,7 @@ the redirecting pages are
             <%}%>
          
       <!--==================== HEADER ====================-->
+      
       <header class="header">
          <section class="flex">
 
@@ -47,17 +48,17 @@ the redirecting pages are
             </a>
             <nav class="navbar">
                <a href="#">Home</a>
-               <a href="#">about</a>
+               <a href="/about">about</a>
                <% let v = '/appliedJobs?id=' +id; %>
                <a href=<%=v%>>Jobs</a>
-               <a href="#">contact us</a>
+               <a href="/contact">contact us</a>
                <div class="btn dropdown" style="margin-top: 0;">
                   <!-- <button class="dropbtn">Dropdown</button> -->
                   <i class="fa-regular fa-user"></i>
                   <div class="dropdown-content">
-                    <a href="#">Dashboard</a>
-                    <a href="#">Your Profile</a>
-                    <a href="#">Your Profile</a>
+                    <% let e = '/JobSeekerDetails?id=' +id; %>
+                    <a href=<%=e%>>Profile</a>
+                    <a href="/">Logout</a>
                   </div>
                 </div>
             </nav>

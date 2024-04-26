@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Work Experience</title>
+    <script src="https://kit.fontawesome.com/427a1571ad.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="jobpost.css">
+</head>
+
+<body>
+
+    <div class="contact-container" >
+        <div class="contact-div">
+            <div class="contact-form">
+                <span class="circle one"></span><span class="circle two"></span>
+                <%let v = "/editExperience?id=" + id +"&ex_id="+ex_id; %>
+                <form action=<%=v%> method = "Post">
+                    <h3 class="contact-title">Work Experience</h3>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label >Company Name</label>
+                            <input type="text" name="company" value="<%=exp.rows[0].company_name%>" placeholder="Enter Company Name" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Job Title</label>
+                            <input type="text" name="title" value="<%=exp.rows[0].job_title%>" placeholder="Enter Job Title" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Job Description</label>
+                            <input type="text" name="description" value="<%=exp.rows[0].description%>" placeholder="Enter Job Description" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Start Date</label>
+                            <% var formattedDate = new Date(exp.rows[0].start_date).toLocaleDateString('en-GB');%>
+                            <%var f1 = formattedDate.slice(6,10)+'-' + formattedDate.slice(3,5)+ '-' + formattedDate.slice(0,2)%>
+                            <input type="date" name="start_date" value="<%=f1%>" placeholder="Enter starting date" required>
+                        </div>
+                        <div class="input-field">
+                            <label >End Date</label>
+                            <% var formattedDate = new Date(exp.rows[0].end_date).toLocaleDateString('en-GB');%>
+                            <%var f1 = formattedDate.slice(6,10)+'-' + formattedDate.slice(3,5)+ '-' + formattedDate.slice(0,2)%>
+                            <input type="date" name="end_date" value="<%=f1%>" placeholder="Enter End Date" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Country</label>
+                            <input type="text" name="country" value="<%=exp.rows[0].job_location_country%>" placeholder="Enter Country Name" required>
+                        </div>
+                        
+                        <div class="input-field">
+                            <label >City</label>
+                            <input type="text" name="city" value="<%=exp.rows[0].job_location_city%>" placeholder="Enter City Name" required>
+                        </div>
+                       
+                        <button type = "submit" class="btn contact-btn">Save</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+</html>

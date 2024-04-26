@@ -46,9 +46,18 @@ app.get("/", (req, res) => {
   }
   res.render("login.ejs", { login: a });
 });
+
+app.get("/contact", (req, res) => {
+  res.render("contact.ejs" );
+});
+
+app.get("/about", (req, res) => {
+  res.render("aboutus.ejs" );
+});
+
 app.get("/jobDescription", async (req, res) => {
-  var id = req.query.jobId;
-  console.log(id);
+  var Id = req.query.jobId;
+  console.log(Id);
   const q = `SELECT c.company_name,
     jp.id AS job_post_id,
     jp.job_description,
@@ -64,7 +73,7 @@ app.get("/jobDescription", async (req, res) => {
     JOIN Job_post jp ON c.company_name = jp.company_name
     LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
     LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
-    and ss.isCompany = 1 where  jp.id = ${id}
+    and ss.isCompany = 1 where  jp.id = ${Id}
     GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
   const q1 = `select email from user_account 
                 join job_post_activity on user_account.id= job_post_activity.user_account_id
@@ -72,11 +81,11 @@ app.get("/jobDescription", async (req, res) => {
   try {
     console.log(req.session.email);
     const result = await db.query(q);
-    const result1 = await db.query(q1, [req.session.email, id]);
+    const result1 = await db.query(q1, [req.session.email, Id]);
     // console.log(1) ;
     // console.log(result1) ;
     req.session.jobs = result;
-    res.render("view_job.ejs", { jobs: result, count: result1.rowCount });
+    res.render("view_job.ejs", { jobs: result, count: result1.rowCount, id:Id });
   } catch (error) {
     // console.error("Error checking email:", error);
     console.log(error);
@@ -115,6 +124,142 @@ app.get("/viewAllJobs", async(req,res)=>{
   }
   // res.render("viewall.ejs");
 });
+app.get("/addEducationForm", async (req, res) => {
+  // console.log(10) ;
+  var Id = req.query.id ;
+  console.log(Id) ;
+  return res.render("editeducationdetail.ejs", {id : Id});
+});
+
+app.get("/addExperienceForm", async (req, res) => {
+  // console.log(10) ;
+  var Id = req.query.id ;
+  console.log(Id) ;
+  return res.render("editworkexperience.ejs",  {id : Id});
+});
+
+app.get("/addSkillForm", async (req, res) => {
+  console.log(10) ;
+  var Id = req.query.id ;
+  console.log(Id) ;
+  return res.render("editskill.ejs",  {id : Id});
+});
+
+app.get("/editDetailsForm", async (req, res) => {
+  console.log(10) ;
+  var Id = req.query.id ;
+  console.log(Id) ;
+  // let name = "ab" ;
+  const q = `select * from user_account where id = $1` ;
+  try {
+    let val = [Id] ;
+    const result = await db.query(q,val);
+    // console.log(result.rows[0].date_of_birth)
+    return res.render("editpersonaldetail.ejs",  {id : Id, account: result});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+  
+});
+
+app.get("/editEducationForm", async (req, res) => {
+  console.log(10) ;
+  var Id = req.query.id ;
+  var ed_id = req.query.ed_id ;
+  console.log(ed_id) ;
+  // let name = "ab" ;
+  const q = `select * from education_detail where id = $1` ;
+  try {
+    let val = [ed_id] ;
+    const result = await db.query(q,val);
+    // console.log(result.rows[0].date_of_birth)
+    return res.render("editeducation.ejs",  {id : Id, educate: result});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+  
+});
+app.get("/editExperienceForm", async (req, res) => {
+  console.log(10) ;
+  var Id = req.query.id ;
+  var Ex_id = req.query.ex_id ;
+  console.log(Ex_id) ;
+  // let name = "ab" ;
+  const q = `select * from experience_detail where id = $1` ;
+  try {
+    let val = [Ex_id] ;
+    const result = await db.query(q,val);
+    // console.log(result.rows[0].date_of_birth)
+    return res.render("editExperience.ejs",  {id : Id, exp: result, ex_id : Ex_id});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+  
+});
+
+app.get("/editSkillForm", async (req, res) => {
+  console.log(10) ;
+  var Id = req.query.id ;
+  // let name = "ab" ;
+  const q = `select * from skill_set where user_account_id = $1 and isCompany=$2 ` ;
+  try {
+    let val = [Id,0] ;
+    const result = await db.query(q,val);
+    // console.log(result.rows[0].date_of_birth)
+    let s = "" ;
+    for(let i =0 ; i<result.rowCount ;i++ ){
+      s= s+ result.rows[i].skill_name +' ' ;
+    }
+    s= s.slice(0,-1) ;
+    console.log(s) ;
+    return res.render("editSkillform.ejs",  {id : Id, skill: s});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+  
+});
+
+app.get("/JobSeekerDetails", async(req,res)=>{
+  var Id = req.query.id ;
+  // console.log(11) ;
+  const query = `SELECT id, email, date_of_birth, gender, contact_number, name from user_account
+  WHERE id= $1 `;
+  const q1 = `select * from education_detail where  user_account_id= $1 order by id`;
+  const q2 = `select * from experience_detail  WHERE user_account_id= $1 order by id`;
+  const q3 = `select * from skill_set WHERE user_account_id= $1 and isCompany = 0 order by id`;
+  try {
+    var val = [Id]
+    // console.log(Id) ;
+    req.session.r1= await db.query(query,val);
+    // console.log(Id) ;
+    req.session.r2= await db.query(q1,val);
+    // console.log(Id) ;
+    req.session.r3= await db.query(q2,val);
+    // console.log(Id) ;
+    req.session.r4= await db.query(q3,val);
+    // console.log(Id) ;
+    // req.session.jobs = result;
+    // const q = 'select id from user_account where email = $1' ;
+    // val = [req.session.email] ;
+    // const result1 = await db.query(q,val);
+    // console.log(1) ; 
+    // console.log(result1) ; 
+    res.render("completeprofile.ejs", { account: req.session.r1,educate : req.session.r2,exp : req.session.r3 , skill :req.session.r4 , id :Id });
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
 app.get("/jobSeekerfilters", async (req, res) => {
   const query = `SELECT c.company_name,
                     jp.id AS job_post_id,
@@ -151,9 +296,11 @@ app.get("/jobSeekerfilters", async (req, res) => {
   }
 });
 
+
+
 app.get("/appliedJobs", async(req,res)=>{
-  var id = req.query.id ;
-  console.log(id) ;
+  var Id = req.query.id ;
+  console.log(Id) ;
   const query = `SELECT c.company_name,
                     jp.id AS job_post_id,
                     jp.job_description,
@@ -176,7 +323,7 @@ app.get("/appliedJobs", async(req,res)=>{
                     GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
 
   try {
-    var val = [id] ;
+    var val = [Id] ;
     const result = await db.query(query, val);
     // console.log(result) ;
     req.session.jobs = result;
@@ -185,7 +332,7 @@ app.get("/appliedJobs", async(req,res)=>{
     // const result1 = await db.query(q,val);
     // console.log(1) ; 
     // console.log(result1) ; 
-    res.render("job.ejs", { jobs: result});
+    res.render("job.ejs", { jobs: result, id: Id});
   } catch (error) {
     // console.error("Error checking email:", error);
     console.log(error);
@@ -259,6 +406,7 @@ app.post("/login", async (req, res) => {
     });
   // res.redirect('back') ;
 });
+
 app.post("/signup", async (req, res) => {
   const email = req.body.email;
   const password = hashPassword(req.body.password);
@@ -290,6 +438,161 @@ app.post("/signup", async (req, res) => {
     
       return res.redirect("jobSeekerfilters");
    
+  } catch (error) {
+    console.error("Error inserting user:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/addEducation", async(req,res)=>{
+  let Id  = req.query.id ;
+  let degree = req.body.degree ;
+  let major = req.body.major ;
+  let institute = req.body.institute ;
+  let start_date = req.body.start_date ;
+  let end_date = req.body.end_date ;
+  let cgpa = req.body.cgpa ;
+  const query = `insert into education_detail (user_account_id,certificate_degree_name,major , institute_university_name,
+                starting_date, completion_date,cgpa) values($1,$2,$3,$4,$5,$6,$7)` ;
+
+  try {
+    let val = [Id,degree,major, institute, start_date, end_date, cgpa ]
+    await db.query(query, val);
+    console.log("Successfully inserted");
+      let v = "JobSeekerDetails?id=" + Id ;
+      return res.redirect(v);
+    
+  } catch (error) {
+    console.error("Error inserting user:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/addExperience", async(req,res)=>{
+  let Id  = req.query.id ;
+  let company = req.body.company ;
+  let title = req.body.title ;
+  let description = req.body.description ;
+  let start_date = req.body.start_date ;
+  let end_date = req.body.end_date ;
+  let country = req.body.country ;
+  let city = req.body.city ;
+  const query = `insert into experience_detail (user_account_id,start_date, end_date,
+              job_title, company_name ,job_location_country, job_location_city, description) values($1,$2,$3,$4,$5,$6,$7,$8)` ;
+
+  try {
+    let val = [Id,start_date, end_date,title,company, country, city,description]
+    await db.query(query, val);
+    console.log("Successfully inserted");
+      let v = "JobSeekerDetails?id=" + Id ;
+      return res.redirect(v);
+    
+  } catch (error) {
+    console.error("Error inserting user:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/addSkill", async(req,res)=>{
+  console.log(12) ;
+  
+  let Id  = req.query.id ;
+  let skill = req.body.skill ;
+  console.log(Id) ;
+  const query = `insert into skill_set (skill_name,user_account_id, isCompany) values($1,$2,$3)` ;
+
+  try {
+    let val = [skill,Id,0]
+    await db.query(query, val);
+    console.log("Successfully inserted");
+      let v = "JobSeekerDetails?id=" + Id ;
+      return res.redirect(v);
+    
+  } catch (error) {
+    console.error("Error inserting user:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/editDetails", async(req,res)=>{
+  console.log(12) ;
+  
+  let Id  = req.query.id ;
+  const email = req.body.email;
+  const dob = req.body.dob;
+  const gender = req.body.gender;
+  const number = req.body.number;
+  const name = req.body.name;
+  const query = `UPDATE user_account 
+                  SET email = $1, date_of_birth = $2, gender = $3, contact_number = $4, name = $5 
+                  WHERE id = $6` ;
+
+  try {
+    let val = [email,dob,gender,number,name,Id]
+    await db.query(query, val);
+    console.log("Successfully inserted");
+      let v = "JobSeekerDetails?id=" + Id ;
+      return res.redirect(v);
+    
+  } catch (error) {
+    console.error("Error inserting user:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/editEducation", async(req,res)=>{
+  // console.log(12) ;
+  
+  let Id  = req.query.id ;
+  let ed_id  = req.query.ed_id ;
+  let degree = req.body.degree ;
+  let major = req.body.major ;
+  let institute = req.body.institute ;
+  let start_date = req.body.start_date ;
+  let end_date = req.body.end_date ;
+  let cgpa = req.body.cgpa ;
+  const query = `UPDATE education_detail 
+                  SET certificate_degree_name = $1, major = $2, institute_university_name = $3, starting_date = $4, 
+                  completion_date = $5 , cgpa = $6
+                  WHERE id = $7` ;
+
+  try {
+    let val = [degree,major, institute, start_date, end_date, cgpa ,ed_id]
+    await db.query(query, val);
+    console.log("Successfully inserted");
+      let v = "JobSeekerDetails?id=" + Id ;
+      return res.redirect(v);
+    
+  } catch (error) {
+    console.error("Error inserting user:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/editExperience", async(req,res)=>{
+  // console.log(12) ;
+  
+  let Id  = req.query.id ;
+  let ex_id  = req.query.ex_id ;
+  let company = req.body.company ;
+  let title = req.body.title ;
+  let description = req.body.description ;
+  let start_date = req.body.start_date ;
+  let end_date = req.body.end_date ;
+  let country = req.body.country ;
+  let city = req.body.city ; ;
+  const query = `UPDATE experience_detail 
+                  SET company_name = $1, job_title = $2, description = $3, start_date = $4, 
+                  end_date = $5 , job_location_country = $6, job_location_city = $7
+                  WHERE id = $8` ;
+
+  try {
+    let val = [company,title,description,start_date, end_date, country, city,ex_id]
+    await db.query(query, val);
+    console.log("Successfully inserted");
+      let v = "JobSeekerDetails?id=" + Id ;
+      return res.redirect(v);
+    
   } catch (error) {
     console.error("Error inserting user:", error);
     return res.status(500).send("Internal Server Error");

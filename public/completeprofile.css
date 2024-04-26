@@ -163,6 +163,15 @@ section{
   margin: 6px 0;
 }
 
+.extra-detail{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: var(--light-bg); */
+  /* padding:  15px; */
+  margin: 6px 0;
+}
+
 
 .container form .title{
     display: flex;
@@ -175,7 +184,29 @@ section{
     background-color: var(--light-bg);
 }
 
-.add-btn, .edit-btn{
+.container form .extra-title{
+  display: flex;
+  flex: 1;
+  padding:  15px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 600px;
+  color: #333;
+  /* background-color: var(--light-bg);  */
+}
+
+
+.container form .add-btn{
+  width: 40px;
+  height: 40px;
+  /* margin-top: 25px; */
+  margin-right: 30px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+
+.container form .edit-btn{
   width: 40px;
   height: 40px;
   cursor: pointer;
@@ -183,15 +214,27 @@ section{
 }
 
 .edit-btn{
-
   margin: 0 30px;
 }
 
-.add-btn:hover, .edit-btn:hover{
+.edit-btn:hover{
   cursor: pointer;
   border-radius: 50px ;
   background-color: #fff;
   
+}
+.extra-edit-btn{
+  background-color: #fff;
+}
+
+.extra-edit-btn:hover{
+  background-color: var(--light-bg);
+}
+
+.container form .add-btn:hover{
+  cursor: pointer;
+  border-radius: 50px ;
+  background-color: #fff;
 }
 
 .container form .fields{
@@ -249,5 +292,5 @@ form .fields .input-field{
 }
 
 .input-field input[type = "date"]:valid{
-  color: #333;
+color:#333;
 }

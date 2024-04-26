@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Personal Details</title>
+    <script src="https://kit.fontawesome.com/427a1571ad.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="jobpost.css">
+</head>
+
+<body>
+
+    <div class="contact-container" >
+        <div class="contact-div">
+            <div class="contact-form">
+                <span class="circle one"></span><span class="circle two"></span>
+                <%let v = "/editDetails?id=" + id ; %>
+                <form action=<%=v%> method = "Post">
+                    <h3 class="contact-title">Personal Details</h3>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label >Full Name</label>
+                            <input type="text" name= "name" value="<%= account.rows[0].name %>" placeholder="Enter your Full name" required>
+                        </div>
+                        <div class="input-field">
+                            <% var formattedDate = new Date(account.rows[0].date_of_birth).toLocaleDateString('en-GB');%>
+                            <%var f1 = formattedDate.slice(6,10)+'-' + formattedDate.slice(3,5)+ '-' + formattedDate.slice(0,2)%>
+                            <label >Date of Birth</label>
+                            <input type="date"  name= "dob" value="<%=f1 %>" placeholder="Enter your date of birth" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Email</label>
+                            <input type="text" name= "email" value="<%= account.rows[0].email %>" placeholder="Enter your mail" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label >Mobile Number</label>
+                            <input type="tel" name= "number" value="<%= account.rows[0].contact_number %>" placeholder="Enter your mobile number" required>
+                        </div>
+                        <div class="input-field">
+                            <label >Gender</label>
+                            <select type="option" name= "gender" value="<%= account.rows[0].gender %>" placeholder="Select your Gender" required>
+                                <option class="gender" value="" disabled selected >Select your Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <button type = "submit" class="btn contact-btn">Save</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+   
+</body>
+</html>

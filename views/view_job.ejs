@@ -42,18 +42,11 @@
            </a>
            <nav class="navbar">
               <a href="#">Home</a>
-              <a href="#">about</a>
-              <a href="#">Jobs</a>
-              <a href="#">contact us</a>
-              <div class="btn dropdown" style="margin-top: 0;">
-                 <!-- <button class="dropbtn">Dropdown</button> -->
-                 <i class="fa-regular fa-user"></i>
-                 <div class="dropdown-content">
-                   <a href="#">Dashboard</a>
-                   <a href="#">Your Profile</a>
-                   <a href="#">Your Profile</a>
-                 </div>
-               </div>
+              <a href="/about">about</a>
+              <% let v1 = '/appliedJobs?id=' +id; %>
+              <a href=<%=v1%>>Jobs</a>
+              <a href="/contact">contact us</a>
+              
            </nav>
            
         </section>

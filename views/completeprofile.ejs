@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile</title>
+    <script src="https://kit.fontawesome.com/427a1571ad.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="completeprofile.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <section class="flex">
+            <!-- <div class="logo">
+                <img src="#" alt=""> 
+               <h3>Job Search portal</h3>
+           </div>  -->
+           <a href="#" class="logo">
+            <h3>P&F Jobs</h3>
+           </a>
+           <nav class="navbar">
+              <a href="#">Home</a>
+              <% let v = '/appliedJobs?id=' +id; %>
+              <a href=<%=v%>>Jobs</a>
+              <a href="/about">about us</a>
+              <a href="/contact">contact us</a>
+              <button class="btn solid navbtn">Login / SignUp</button> 
+            </nav>
+        </section>
+     </header>
+
+
+<div class="profile">
+    <div class="container">
+        <div class="profile-box">User Profile</div>
+        <form action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="add-edit">
+                        <span class="title">Personal Details</span>
+                        <button class="edit-btn" onclick = "editDetails(this)" val = <%=id%>> <i class="fa fa-edit"></i></button>  
+                    </div>
+                    
+                    <div class="fields">
+                        <div class="input-field">
+                            <label >Full Name</label>
+                            <p class="name input" id = "d1"><%=account.rows[0].name%></p>
+                        </div>
+                        <div class="input-field">
+                            <label >Date of Birth</label>
+                           <% var formattedDate = new Date(account.rows[0].date_of_birth).toLocaleDateString('en-GB');%>
+
+                            <p class="dateofbirth input" id = "d2"><%=formattedDate%></p>
+                        </div>
+                        <div class="input-field">
+                            <label >Email</label>
+                            <p class="email input" id = "d3"><%=account.rows[0].email%></p>
+                        </div>
+                        <div class="input-field">
+                            <label >Mobile Number</label>
+                            <p class="mobilenumber input" id = "d4"><%=account.rows[0].contact_number%></p>
+                        </div>
+                        <div class="input-field">
+                            <label >Gender</label>
+                            <p class="gender input" id = "d5"><%=account.rows[0].gender%></p>
+                        </div>   
+                    </div>
+                    
+                </div>
+
+                <div class="details personal">
+                    <div class="add-edit">
+                        <span class="title">Education Details</span>  
+                        <button class="add-btn" onclick = "addEducation(this)" val = <%=id%>> <i class="fa fa-plus"></i></button>
+                    </div>
+                    <%for(let i = 0 ; i<educate.rowCount ;i++){%>
+                    <div class="extra-education">
+                        <div class="extra-detail">
+                            <span class="extra-title">Education <%=i+1%></span>
+                            <button class="edit-btn extra-edit-btn" onclick = "editEducation(this)" val = <%=id%> val1=<%=educate.rows[0].id%>> <i class="fa fa-edit"></i></button> 
+                        </div>
+                        <div class="fields">
+                            <div class="input-field">
+                                <label >Certificate / Degree Name</label>
+                                <p class="degree input"><%=educate.rows[i].certificate_degree_name%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Subjects / Major</label>
+                                <p class="major input"><%=educate.rows[i].major%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Institute Name</label>
+                                <p class="institute input"><%=educate.rows[i].institute_university_name%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Starting Date</label>
+                                <% var formattedDate = new Date(educate.rows[i].starting_date).toLocaleDateString('en-GB');%>
+                                <p class="startdate input"><%=formattedDate%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Completion Date</label>
+                                <% var formattedDate = new Date(educate.rows[i].completion_date).toLocaleDateString('en-GB');%>
+                                <p class="enddate input"><%=formattedDate%></p>
+                            </div> 
+                            <div class="input-field">
+                                <label >CGPA / Percentage</label>
+                                <p class="cgpa input"><%=educate.rows[i].cgpa%></p>
+                            </div>     
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+
+                <div class="details personal">
+                    <div class="add-edit">
+                        <span class="title">Work Experience</span>
+                        <button class="add-btn" onclick = "addExperience(this)" val = <%=id%>> <i class="fa fa-plus" ></i></button>
+                    </div>
+                    <%for(let i = 0 ; i<exp.rowCount ;i++){%>
+                    <div class="extra-experience">
+                        <div class="extra-detail">
+                            <span class="extra-title">Experience <%=i+1%></span>
+                            <button class="edit-btn extra-edit-btn" onclick = "editExperience(this)" val = <%=id%> val1=<%=exp.rows[i].id%>> <i class="fa fa-edit"></i></button> 
+                        </div>
+                        <div class="fields">
+                            <div class="input-field">
+                                <label >Company Name</label>
+                                <p class="company input"><%=exp.rows[i].company_name%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Job Title</label>
+                                <p class="jobtitle input"><%=exp.rows[i].job_title%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Job Description</label>
+                                <p class="jobdescription input"><%=exp.rows[i].description%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Start Date</label>
+                                <% var formattedDate = new Date(exp.rows[i].start_date).toLocaleDateString('en-GB');%>
+                                <p class="workstartdate input"><%=formattedDate%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >End Date</label>
+                                <% var formattedDate = new Date(exp.rows[i].end_date).toLocaleDateString('en-GB');%>
+                                <p class="workenddate input"><%=formattedDate%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >Country</label>
+                                <p class="country input"><%=exp.rows[i].job_location_country%></p>
+                            </div>
+                            <div class="input-field">
+                                <label >City</label>
+                                <p class="city input"><%=exp.rows[i].job_location_city%></p>
+                            </div>  
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+
+                <div class="details personal">
+                    <div class="add-edit">
+                        <span class="title">Skills</span>
+                        <button class="add-btn" onclick = "addSkill(this)" val = <%=id%>> <i class="fa fa-plus" ></i></button>
+                        <button class="edit-btn" onclick = "editSkill(this)" val = <%=id%>> <i class="fa fa-edit"></i></button> 
+                    </div>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label >Skill Name</label>
+                            <%let s=""%>
+
+                            <%for(let i = 0 ; i<skill.rowCount ;i++){%>
+                                <% s =s+skill.rows[i].skill_name %>
+                                <% s =s+"," %>
+                            <%}%>
+                            <% s  = s.slice(0, -1); %>
+                            <p class="skill input"><%=s%></p>
+                        </div>  
+                    </div>
+                </div>
+             
+            </div>
+       </form>
+    </div>
+</div>
+
+<script src="profile.js"></script>
+  <script>
+    
+     window.onscroll = function() {myFunction()};
+
+     var navbar = document.getElementById("navbar");
+     var sticky = navbar.offsetTop;
+     function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+     }
+
+  </script>
+</body>
+</html>
