@@ -30,8 +30,8 @@ module.exports = { hashPassword };
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "Job",
-  password: "7668", // add your password
+  database: "job2",
+  password: "1023", // add your password
   port: 5432,
 });
 db.connect();
@@ -65,6 +65,9 @@ app.post("/newjob", async (req, res) => {
   const state = req.body.state;
   const country = req.body.country;
   const zip = req.body.zip;
+  const input_skill = req.body.skill;
+  const skills = input_skill.split(',');
+  console.log(skills);
   const description = req.body.description;
   // Check if email already exists
   const query = `SELECT company_name FROM company WHERE comapny_email = $1`;
@@ -89,6 +92,17 @@ app.post("/newjob", async (req, res) => {
     const query2 = `SELECT count(*) as id FROM job_post `;
     const id = await db.query(query2);
     console.log(id);
+
+    //Insert all skill in skill_set
+    for (let i = 0; i < skills.length; i++) {
+      const element = skills[i];
+      const insertQuery3 = `INSERT INTO skill_set (job_post_id, skill_name, isCompany) 
+     VALUES ($1, $2, $3)`;
+    const insertValues3 = [id.rows[0].id, element, 1];
+    await db.query(insertQuery3, insertValues3);
+    console.log("Successfully skill_set inserted");
+      
+    }
     // Insert new location
     const insertQuery2 = `INSERT INTO job_location (job_post_id, street_address, city , state , country , zip) 
      VALUES ($1, $2, $3, $4, $5, $6)`;
@@ -111,6 +125,41 @@ app.post("/newjob", async (req, res) => {
   // }
   //finding id for inserted company
  
+});
+
+app.post("/job_delete", async (req, res) => {
+  const id = req.query.jobid;
+  console.log(id);
+  const query1 = `delete from skill_set 
+where job_post_id = $1`;
+const value = [id];
+
+const query2 = `delete from job_post_activity 
+where job_post_id = $1`;
+
+const query3 = `delete from job_location 
+where job_post_id = $1`;
+
+const query4 = `delete from job_post 
+where id = $1`;
+
+
+  try {
+    const result1 = await db.query(query1, value);
+    const result2 = await db.query(query2, value);
+    const result3 = await db.query(query3, value);
+    const result4 = await db.query(query4, value);
+    // console.log(result);
+    console.log(req.session.email);
+   // console.log(resureq.session.emaillt);
+   console.log("succesfully deleted");
+    res.redirect("jobs");
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/jobs", async (req, res) => {

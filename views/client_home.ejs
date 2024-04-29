@@ -57,7 +57,8 @@
                       </div>
                       <div class="flex_btn">
                           <a href="candidates_applied.html" class="btn">candidates Applied</a>
-                          <form action="/jobs/delete/<%= jobs.rows[j].job_post_id %>" method="post">
+                          <% let v= "/job_delete?jobid=" + jobs.rows[j].job_post_id %>
+                          <form action= <%=v %> method="post">
                               <button type="submit" class="btn">Delete</button>
                           </form>
                       </div>
