@@ -51,8 +51,69 @@ app.get("/login_company", async (req, res) => {
   }
   res.render("login_company.ejs", { login: a });
 });
-app.get("/NewJobPost", (req, res) => {
+app.get("/NewJobPost",(req, res) => {
   res.render("NewJobPost.ejs");
+});
+
+app.get("/moreinfo", async(req, res) => {
+  const id = req.query.userid;
+  const query1 = `SELECT name FROM user_account 
+   WHERE id = $1`;
+  const value = [id];
+
+  const query2 = `SELECT certificate_degree_name ,major,
+  institute_university_name ,starting_date , completion_date , cgpa
+   FROM education_detail
+   WHERE user_account_id = $1`;
+
+   const query3 = `SELECT start_date , end_date ,
+   job_title , company_name , job_location_city , description
+   FROM experience_detail 
+   WHERE user_account_id = $1`;
+
+   const query4 = `SELECT skill_name
+    FROM skill_set
+   WHERE user_account_id = $1`;
+
+
+  try {
+    const result1 = await db.query(query1, value);
+    const result2 = await db.query(query2, value);
+    const result3 = await db.query(query3, value);
+    const result4 = await db.query(query4, value);
+
+
+   console.log("succesfully more info");
+   res.render("More_info.ejs",{name:result1,edu:result2 , exp : result3 , skill: result4});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+
+});
+
+app.get("/candidate", async(req, res) => {
+  const id = req.query.jobid;
+  const query = `SELECT name,id FROM user_account u
+  join job_post_activity j on u.id = j.user_account_id 
+   WHERE j.job_post_id = $1`;
+  const value = [id];
+
+
+  try {
+    const result1 = await db.query(query, value);
+
+   console.log("succesfully find name");
+   res.render("candidates_applied.ejs",{jobs:result1});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+
 });
 
 app.post("/newjob", async (req, res) => {
