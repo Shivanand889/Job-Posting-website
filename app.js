@@ -31,7 +31,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "Job",
-  password: "1023", // add your password
+  password: "7668", // add your password
   port: 5432,
 });
 db.connect();
@@ -86,9 +86,9 @@ app.post("/newjob", async (req, res) => {
     ];
     await db.query(insertQuery, insertValues);
     console.log("Successfully inserted");
-    const query2 = `SELECT id FROM job_post order by created_date desc limit 1`;
+    const query2 = `SELECT count(*) as id FROM job_post `;
     const id = await db.query(query2);
-  
+    console.log(id);
     // Insert new location
     const insertQuery2 = `INSERT INTO job_location (job_post_id, street_address, city , state , country , zip) 
      VALUES ($1, $2, $3, $4, $5, $6)`;
@@ -117,24 +117,32 @@ app.get("/jobs", async (req, res) => {
   console.log(13);
   const query = `SELECT jp.id AS job_post_id,
   jp.title AS job_title,
-  jp.company_name as company_name , 
+  c.company_name as company_name , 
   jl.city AS job_city,
   jl.country AS job_country,
   jp.salary AS job_salary,
   jp.job_type AS job_type
-FROM Job_post jp
-JOIN Job_location jl ON jp.id = jl.job_post_id
-join company as c on jp.company_name = c.company_name
+FROM company as c 
+Left JOIN job_post jp ON jp.company_name = c.company_name 
+left join job_location as jl on jp.id = jl.job_post_id
+where comapny_email = $1`;
+
+const query2 = `select company_name from company
 where comapny_email = $1`;
   const namechaeck = [req.session.email];
 
+
+
   try {
     const result = await db.query(query, namechaeck);
-    // console.log(result);
-
-    res.render("client_home.ejs", { jobs: result });
+    console.log(result);
+    console.log(req.session.email);
+    const result2 = await db.query(query2,namechaeck);
+   // console.log(resureq.session.emaillt);
+    res.render("client_home.ejs", { jobs: result ,jobs2 : result2});
   } catch (error) {
     // console.error("Error checking email:", error);
+    
     console.log(error);
     return res.status(500).send("Internal Server Error");
   }
@@ -146,6 +154,7 @@ app.post("/login_c", async (req, res) => {
   password = hashPassword(password);
   var q = `SELECT * FROM company WHERE comapny_email = $1`;
   var x = [email];
+
   await db
     .query(q, x)
     .then((result) => {
@@ -183,6 +192,7 @@ app.post("/sign_c", async (req, res) => {
   const Comapny_name = req.body.Comapny_name;
   const description = req.body.description;
   // Check if email already exists
+  console.log(123)
   const emailCheckQuery = `SELECT * FROM company WHERE comapny_email = $1`;
   const emailCheckValues = [email];
   try {
@@ -208,9 +218,10 @@ app.post("/sign_c", async (req, res) => {
     description,
   ];
   try {
+    console.log(124) ;
     await db.query(insertQuery, insertValues);
     console.log("Successfully inserted");
-
+    req.session.email = email ;
     return res.redirect("jobs");
   } catch (error) {
     console.error("Error inserting user:", error);

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/427a1571ad.js" crossorigin="anonymous"></script>
     <title>LogIn & signUp form</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -17,11 +17,11 @@
                     <h2 class="title">Sign In</h2>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'email' placeholder="Email">
+                        <input type="text" name = 'email' placeholder="Email"  required>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name = 'password' placeholder="Password">
+                        <input type="password" name = 'password' placeholder="Password"  required>
                     </div>
                     <div>
                         <% if (login==0){%>
@@ -38,35 +38,35 @@
                 <form action="/signup" method = 'post' class="sign-up-form" onsubmit="return validateFormsign()" name = "sign">
                     <h2 class="title">Sign Up</h2>
                     <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'name' placeholder="Name">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name = 'name' placeholder="Name"  required>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'email' placeholder="Email">
+                        <input type="text" name = 'email' placeholder="Email"   required>
                     </div>
                     <div class="input-field">
                         <i class="fa-regular fa-calendar-days"></i>
-                        <input type="text" name = 'dob' placeholder="Date of birth" onfocus="(this.type='date')" >
+                        <input type="text" name = 'dob' placeholder="Date of birth" onfocus="(this.type='date')"  required> 
                     </div>
                     <div class="input-field">
                         <i class="fa-solid fa-person"></i>
-                        <select placeholder="Gender" name = 'gender'>
-                          <option class="gender"  value="" disabled selected >Gender</option>
+                        <select  placeholder="Gender" name = 'gender'   required>
+                          <option class="gender"  value="" selected disabled >Gender</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                           <option value="other">Other</option>
                         </select>
                       </div>
                       <div class="input-field">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <input type="number" placeholder="contact number" name = 'contact' >
+                        <i class="fa fa-phone"></i>
+                        <input type="number" placeholder="contact number" name = 'contact'   required>
                     </div>
                       
                     
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name ='password' placeholder="Password">
+                        <input type="password" name ='password' placeholder="Password"   required>
                     </div>
                     <input type = 'submit' value ='Sign Up' class="btn solid">
                 </form>

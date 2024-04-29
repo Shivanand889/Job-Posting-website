@@ -32,34 +32,47 @@
            <%    return date.toDateString();%>
            <% }%>
            <%}%>
-    <header class="header">
-        <section class="flex">
+    
+   <header class="header">
+    <section class="flex">
 
-           <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
-           <a href="#" class="logo">
-              <i class="fa-solid fa-briefcase"></i>
-              Job Search portal
-           </a>
-           <nav class="navbar">
-              <a href="#">Home</a>
-              <a href="/about">about</a>
-              <% let v1 = '/appliedJobs?id=' +id; %>
-              <a href=<%=v1%>>Jobs</a>
-              <a href="/contact">contact us</a>
-              
-           </nav>
-           
-        </section>
+       <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
+       <a href="#" class="logo">
+          <h3>P&F Jobs</h3>
+      </a>
+       <!-- <a href="#" class="logo">
+          <i class="fa-solid fa-briefcase"></i>
+          Job Search portal
+       </a> -->
+       <nav class="navbar">
+          <a href="#">Home</a>
+          <% let a = '/appliedJobs?id=' +id; %>
+          <a href=<%=a%>>Jobs</a>
+          <a href="/about">About us</a>
+          <a href="/contact">Contact us</a>
+          <div class="btn dropdown" style="margin-top: 0;">
+             <!-- <button class="dropbtn">Dropdown</button> -->
+             <i class="fa-regular fa-user"></i>
+             <div class="dropdown-content">
+               <% let e = '/JobSeekerDetails?id=' +id; %>
+               <a href=<%=e%>>Profile</a>
+               <a href="/">Logout</a>
+             </div>
+           </div>
+       </nav>
+       
+    </section>
 
-     </header>
+ </header>
 
 
      <section class="job-details">
         <h1 class="heading">job details</h1>
         <div class="details">
-            <div class="jon-info">
+            <div class="job-info">
                 <h3><%=jobs.rows[0].title%></h3>
-                <a href="view_company.html"><%=jobs.rows[0].company_name%></a>
+                <p><%=jobs.rows[0].company_name%></p>
+                <!-- <a href="view_company.html"><%=jobs.rows[0].company_name%></a> -->
                 <p><i class="fa-solid fa-location-dot"></i>
                     <%for(let i = 0 ;i<jobs.rows[0].city.length ; i++) {%>
                         <%=jobs.rows[0].city[i]%>
@@ -78,35 +91,45 @@
             </div>
             <ul>
                 <h3>requirements</h3>
-                <li>education: <span>graduate</span></li>
-                <li>age: <span>18+</span></li>
-                <li>language: <span>hindi , english</span></li>
-                <li>experience: <span>3+ years</span></li>
+                <div class="requirements">
+                    <li>education: <span>graduate</span></li>
+                    <li>age: <span>18+</span></li>
+                    <li>language: <span>hindi , english</span></li>
+                    <li>experience: <span>3+ years</span></li>
+                </div>
+               
             </ul>
             <ul>
                 <h3>qualifications</h3>
-                <li>Bachelor's </li>
+                <div class="requirements">
+                    <li>Bachelor's </li>
                 <li>PHP: 1 year experience</li>
                 <li>Web Design: Both Frontend and Backend</li>
                 <li>WordPress: 1 year</li>
                 <li>Total work: 3 years</li>
+                </div>  
             </ul>
             <ul>
                 <h3>skills</h3>
-                <%for(let i = 0 ;i<jobs.rows[0].job_skills.length ; i++) {%>
-                    <li><%=jobs.rows[0].job_skills[i]%></li>
-                <%}%>                    
-                
+                <div class="requirements">
+                    <%for(let i = 0 ;i<jobs.rows[0].job_skills.length ; i++) {%>
+                        <li><%=jobs.rows[0].job_skills[i]%></li>
+                    <%}%>  
+                </div> 
             </ul>
             <div class="description">
                 <h3>job description</h3>
-                <p>
-                    <%=jobs.rows[0].job_description%>
-                </p>
-                <ul>
-                    <li>Hiring 2 candidates for this role</li>
-                    <li><%=time(jobs.rows[0].created_date)%></li>
-                </ul>
+                <div class="requirements">
+                    <p>
+                        <%=jobs.rows[0].job_description%>
+                    </p>
+                    <ul>
+    
+                        <li>Hiring 2 candidates for this role</li>
+                        <li><%=time(jobs.rows[0].created_date)%></li>
+                    </ul>
+                </div>
+                
             </div>
             <% let v = '/apply?jobId=' + jobs.rows[0].job_post_id ; %>
             <form action= <%=v%> method="post" class="flex-btn">
@@ -119,81 +142,35 @@
             </form>
         </div>
 
-
      </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
      <footer class="footer">
-        <section class="grid">
+        <div class="grid">
               <div class="box">
                  <h3>Quick Links</h3>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>Home</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>about</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>All jobs</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>contact us</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>Filter search</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"> </i> Home</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> About us</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> All jobs</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Contact us</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Filter search</a>
               </div>
 
               <div class="box">
                  <h3>extra links</h3>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>account</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>login</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>register</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>dashboard</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Account</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Login</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Register</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Dashboard</a>
               </div>
 
               <div class="box">
                  <h3>Follow us</h3>
-                 <a href="#"><i class="fa-brands fa-instagram"></i>instagram</a>
-                 <a href="#"><i class="fa-brands fa-facebook"></i>facebook</a>
-                 <a href="#"><i class="fa-brands fa-x-twitter"></i>Twitter</a>
+                 <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                 <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                 <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
               </div>
 
-        </section>
+        </div>
      </footer>
 
 

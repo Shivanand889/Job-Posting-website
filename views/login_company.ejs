@@ -17,11 +17,11 @@
                     <h2 class="title">Sign In</h2>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'email' placeholder="Email">
+                        <input type="text" name = 'email' placeholder="Email"  required>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name = 'password' placeholder="Password">
+                        <input type="password" name = 'password' placeholder="Password"   required>
                     </div>
                     <div>
                         <% if (login==0){%>
@@ -38,33 +38,30 @@
                 <form action="/sign_c" method = 'post' class="sign-up-form" onsubmit="return validateFormsign()" name = "sign">
                     <h2 class="title">Sign Up</h2>
                     <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'Comapny_name' placeholder="Company_Name">
+                        <i class="fa fa-building"></i>
+                        <input type="text" name = 'Comapny_name' placeholder="Company Name"   required>
                     </div>
                     
                     <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'url' placeholder="URL">
+                        <i class="fas fa-link"></i>
+                        <input type="text" name = 'url' placeholder="Company URL"   required>
                     </div>
 
                     <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'Stream' placeholder="Stream">
+                        <i class="fas fa-stream"></i>
+                        <input type="text" name = 'Stream' placeholder="Stream"  required>
                     </div>
-
+                     <div class="input-field">
+                        <i class="fas fa-file-text"></i>
+                        <input type="text" name = 'description' placeholder="Description"  required>
+                    </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'email' placeholder="email">
+                        <input type="text" name = 'email' placeholder="Email"   required>
                     </div>
-                    
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name ='password' placeholder="Password">
-                    </div>
-                    <!-- Comapny -  Description  -->
-                    <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" name = 'description' placeholder="description">
+                        <input type="password" name ='password' placeholder="Password"  required>
                     </div>
                     <input type = 'submit' value ='Sign Up' class="btn solid">
 

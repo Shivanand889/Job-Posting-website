@@ -179,20 +179,12 @@ form.sign-up-form{
     
 }
 
-.input-field input[type="date"]{
+.input-field select:invalid, .input-field select option[value=""]{
   color: #aaa;
 }
 
-.input-field input[type = "date"]:valid{
-  color: #333;
-}
-
-.input-field select[type="option"]{
-  color: #aaa;
-}
-
-.input-field select[type = "option"]:valid{
-  color: #333;
+.input-field select, .input-field select option{
+  color: #333; 
 }
 
 
@@ -264,11 +256,11 @@ form.sign-up-form{
 .panel h3{
     font-weight: 600;
     line-height: 1;
-    font-size: 1.5rem;   
+    font-size: 1.6rem;   
 }
 
 .panel p{
-    font-size: 0.95rem;
+    font-size: 1rem;
     padding: 0.7rem 0;
 }
 
@@ -278,7 +270,7 @@ form.sign-up-form{
   border: 2px solid #fff;
   width: 130px;
   height: 41px;
-  font-size: 0.8rem;
+  font-size: 1.3rem;
   font-weight: 600;  
 }
 
