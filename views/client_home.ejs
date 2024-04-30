@@ -23,10 +23,12 @@
            </a>
            <nav class="navbar">
               <a  href="#">Home</a>
-              <a  href="#">Jobs</a>
-              <a  href="#">About us</a>
-              <a  href="#">Contact us</a>
+              <!-- <a  href="#">Jobs</a> -->
+              <a  href="/about">About us</a>
+              <a  href="/contact">Contact us</a>
               <button class="btn clientbtn"><a class="postjob-btn" href="/NewJobPost" >Post a new Job</a></button>
+              <% let v1 = "/deleteaccount?name=" + jobs2.rows[0].company_name ; %>
+              <button class="btn clientbtn"><a class="postjob-btn" href=<%=v1%> >Delete Account</a></button>
            </nav>
         </section>
 

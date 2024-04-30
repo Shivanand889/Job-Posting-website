@@ -26,7 +26,8 @@
             Job Search portal
          </a> -->
          <nav class="navbar">
-            <a href="#">Home</a>
+            <% let v1 = '/jobSeekerfilters?id=' +id; %>
+            <a href=<%=v1%>>Home</a>
             <% let v = '/appliedJobs?id=' +id; %>
             <a href=<%=v%>>Jobs</a>
             <a href="/about">About us</a>

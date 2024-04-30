@@ -45,7 +45,7 @@
           Job Search portal
        </a> -->
        <nav class="navbar">
-          <a href="#">Home</a>
+          <a href="/jobSeekerfilters">Home</a>
           <% let a = '/appliedJobs?id=' +id; %>
           <a href=<%=a%>>Jobs</a>
           <a href="/about">About us</a>
@@ -117,8 +117,13 @@
                     <%}%>  
                 </div> 
             </ul>
+            <ul>
+                <h3>Applied : <%=jobs.rows[0].application_count%></h3>
+               
+            </ul>
             <div class="description">
                 <h3>job description</h3>
+                
                 <div class="requirements">
                     <p>
                         <%=jobs.rows[0].job_description%>

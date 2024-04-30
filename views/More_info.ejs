@@ -21,10 +21,9 @@
               Job Search portal
            </a>
            <nav class="navbar">
-              <a href="#">Home</a>
-              <a href="#">about</a>
-              <a href="#">Jobs</a>
-              <a href="#">contact us</a>
+              <a href="/jobs">Home</a>
+              <a href="/about">about</a>
+              <a href="/contact">contact us</a>
            </nav>
            
         </section>
@@ -33,7 +32,7 @@
 
 
      <section class="job-details">
-        <h1 class="heading">Full Information of (Name of candidate) </Name></h1>
+        <h1 class="heading">Full Information </Name></h1>
         <div class="details">
             <div class="jon-info">
                 <h3><%= name.rows[0].name %></h3>
@@ -53,6 +52,8 @@
             <ul>
                 <h3>Education</h3>
                 <% for(let i = 0; i < edu.rows.length; i += 1) { %>
+                    <%let v = "Education " + (i+1) ; %>
+                    <h3><%=v%></h3>
                     <% var s= new Date(edu.rows[i].starting_date).toLocaleDateString('en-GB');%>
                     <% var e= new Date(edu.rows[i].completion_date).toLocaleDateString('en-GB');%>
                 <li>Institue Name :  <span><%= edu.rows[i].institute_university_name%>(<%=s %>-<%=e%>)</span></li>
@@ -65,6 +66,8 @@
             <ul>
                 <h3>Experience</h3>
                 <% for(let i = 0; i < exp.rows.length; i += 1) { %>
+                    <%let v = "Experience " + (i+1) ; %>
+                    <h3><%=v%></h3>
                     <% var s= new Date(exp.rows[i].start_date).toLocaleDateString('en-GB');%>
                     <% var e= new Date(exp.rows[i].end_date).toLocaleDateString('en-GB');%>
                 <li>Company Name :  <span><%= exp.rows[i].company_name%>(<%=s %>-<%=e%>)</span></li>

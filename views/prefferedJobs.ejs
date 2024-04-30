@@ -10,10 +10,10 @@
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="Student_after_login.css">
 
-<!-- This is the page when the person who is logged in can see all the posts applied by him -->
-    <title>Jobs Applied</title>
+    <title>All Posts by {Compary name}</title>
 </head>
 <body>
+
    <header class="header">
       <section class="flex">
 
@@ -26,7 +26,8 @@
             Job Search portal
          </a> -->
          <nav class="navbar">
-            <a href="/jobSeekerfilters">Home</a>
+            <% let v1 = '/jobSeekerfilters?id=' +id ; %>
+            <a href=<%=v1%>>Home</a>
             <% let v = '/appliedJobs?id=' +id; %>
             <a href=<%=v%>>Jobs</a>
             <a href="/about">About us</a>
@@ -64,12 +65,9 @@
          <%    return date.toDateString();%>
          <% }%>
          <%}%>
-
      <section class="job-container" id="jobContainer">
-         <h1 class="heading">Latest Jobs</h1>
-         <% for (let i =0 ;i <jobs.rows.length ;i=i+3) {%>
-      
-
+      <h1 class="heading">Latest Jobs</h1>
+      <% for (let i =0 ;i <jobs.rows.length ;i=i+3) {%>
       <div class="box-container" id  = "box-container">
          
          <div class="box">
@@ -141,10 +139,11 @@
                   <% for(let j = 0 ; j<jobs.rows[i+2].city.length ;j++){%>
                   <%=jobs.rows[i+2].city[j]%>
                <%}%>
-               </span></p>
+                  </span></p>
                <div class="tags">
                   <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+2].salary%></span></p>
-                  <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+2].job_type%></span></p>  
+                  <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+2].job_type%></span></p>
+                  
                </div>
 
                <div class="flex_btn">
@@ -153,19 +152,19 @@
                   <button type="submit" class="far fa-heart"></button>
                </div>
             </div>
-         <%}%>
+            <%}%>
       
-      </div>
-   </section>
+   </div>
       
       <%}%>
+   <!-- </div> -->
+   <!-- <div style="text-align: center; margin-top: 2rem;">
 
+         <a href="/viewAllJobs" class="btn">View All</a>
+      </div> -->
+   </section>
 
-
-
-
-
-      <footer class="footer">
+   <footer class="footer">
          <div class="grid">
                <div class="box">
                   <h3>Quick Links</h3>
@@ -193,5 +192,7 @@
  
          </div>
       </footer>
+      
+    
 </body>
 </html>

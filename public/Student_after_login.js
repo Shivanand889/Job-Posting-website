@@ -24,7 +24,7 @@ async function handleCheckboxChange() {
     
     if (checkbox.checked) {
       
-      
+      console.log(checkbox.getAttribute('data-value')) ;
       checkedLocation.push(checkbox.getAttribute('data-value'));
     }
   });
@@ -99,8 +99,8 @@ async function filters(checkedValues , checkedLocation ,checkedCompany , checked
       throw new Error('Failed to delete the post');
     }
     const responseData = await response.json();
-    jobs = responseData.jobs ;
-    
+    let jobs = responseData.jobs ;
+    let id = responseData.id ;
    // alert(jobs[0].company_name) ;
     let jobHtml = `<h1 class="heading">Latest Jobs</h1>`;
     //jobHtml = ""
@@ -136,10 +136,11 @@ async function filters(checkedValues , checkedLocation ,checkedCompany , checked
       }
       jobHtml += '</div>';
     }
-    
+    let str1 = "/viewAllJobs?id=" + id ;
+    console.log(str1) ;
     jobHtml += `<div style="text-align: center; margin-top: 2rem;">
 
-            <a href="jobs.html" class="btn">View All</a>
+            <a href=${str1} class="btn">View All</a>
          </div>` ;
 
     

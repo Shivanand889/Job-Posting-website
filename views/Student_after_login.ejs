@@ -52,9 +52,11 @@ the redirecting pages are
             <nav class="navbar">
                <a href="#">Home</a>
                <% let v = '/appliedJobs?id=' +id; %>
-               <a href=<%=v%>>Jobs</a>
+               <a href=<%=v%>>Applied Jobs</a>
                <a href="/about">About us</a>
                <a href="/contact">Contact us</a>
+               <% let v3 = '/Prefferdjobs?id=' +id; %>
+               <a href=<%=v3%>>Prefferd Jobs</a>
                <div class="btn dropdown" style="margin-top: 0;">
                   <!-- <button class="dropbtn">Dropdown</button> -->
                   <i class="fa-regular fa-user"></i>
@@ -82,42 +84,14 @@ the redirecting pages are
                   <div class="dropdown_new" id = "company">
                      <input type="text" readonly placeholder="company" name="date" maxlength="20" class="output">
                      <div class="lists">
-                        <p class="items">
-                           <span class="checkbox">
-                              <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Amazon">
-                           </span>
-                           Amazon
-                        </p>
-                        <p class="items">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "JP Morgan Chase">
-                           </span>
-                              JP Morgan Chase
-                        </p>
-                        <p class="items">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Google">
-                           </span>
-                           Google
-                        </p>
-                        <p class="items">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Netflix">
-                           </span>
-                           Netflix
-                        </p>
-                        <p class="items">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Flipkart">
-                           </span>
-                           Flipkart
-                        </p>
-                        <p class="items">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Apple">
-                           </span>
-                           Apple
-                        </p>
+                        <%for(let i=0 ;i<company.length ;i++){ %>
+                           <p class="items">
+                              <span class="checkbox">
+                                 <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "<%=company[i].company_name%>">
+                              </span>
+                              <%=company[i].company_name%>
+                           </p>
+                        <%}%>
                      </div>
                   </div>
                </div>
@@ -127,24 +101,14 @@ the redirecting pages are
                      <div class="dropdown_new" id = "location">
                         <input type="text" readonly placeholder="Location" name="date" maxlength="20" class="output">
                         <div class="lists">
-                           <p class="items">
-                              <span class="checkbox">
-                                 <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Bangalore">
-                              </span>
-                              Bangalore 
-                           </p>
-                           <p class="items">
-                              <span class="checkbox">
-                                 <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Mountain View">
-                              </span>
-                                 Mountain View
-                           </p>
-                           <p class="items">
-                              <span class="checkbox">
-                                 <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "New York">
-                              </span>
-                              New York
-                           </p>
+                           <%for(let i=0 ;i<location.length ;i++){ %>
+                              <p class="items">
+                                 <span class="checkbox">
+                                    <input input type = "checkbox" onchange="handleCheckboxChange()" data-value = "<%=location[i].city%>">
+                                 </span>
+                                 <%=location[i].city%>
+                              </p>
+                           <%}%>
                            
                         </div>
                      </div>
@@ -215,30 +179,14 @@ the redirecting pages are
                   <div class="dropdown_new" id = "skill">
                      <input type="text" readonly placeholder="Skills" name="date" maxlength="20" class="output">
                      <div class="lists">
-                        <p class="items" value = "Python">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Python">
-                           </span>
-                           Python 
-                        </p>
-                        <p class="items" value = "Frontend">
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Frontend">
-                           </span>
-                           Frontend 
-                        </p>
-                        <p class="items" value = "Backend" >
-                           <span class="checkbox">
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "C++">
-                           </span>
-                           C++
-                        </p>
-                        <p class="items" value = "Strong analytical skills" >
-                           <span class="checkbox" >
-                              <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "Java">
-                           </span>
-                           Java 
-                        </p>
+                        <%for(let i=0 ;i<skill.length ;i++){ %>
+                           <p class="items" value = <%=skill[i].skill_name%>>
+                              <span class="checkbox">
+                                 <input type = "checkbox" onchange="handleCheckboxChange()" data-value = "<%=skill[i].skill_name%>">
+                              </span>
+                              <%=skill[i].skill_name%> 
+                           </p>
+                        <%}%>
                      </div>
                   </div>
                   
@@ -342,8 +290,8 @@ the redirecting pages are
          <%}%>
       <!-- </div> -->
       <div style="text-align: center; margin-top: 2rem;">
-
-            <a href="/viewAllJobs" class="btn">View All</a>
+         <% let v1 = '/viewAllJobs?id=' + id; %>
+            <a href=<%=v1%> class="btn">View All</a>
          </div>
       </section>
 
@@ -378,7 +326,7 @@ the redirecting pages are
          </div>
       </footer>
       
-
+s
       <!--=============== MAIN JS ===============-->
       <!-- <script src="assets/js/main.js"></script> -->
       
