@@ -30,8 +30,8 @@ module.exports = { hashPassword };
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "Job",
-  password: "7668", // add your password
+  database: "job2",
+  password: "1023", // add your password
   port: 5432,
 });
 db.connect();
@@ -95,8 +95,22 @@ app.get("/login_company", async (req, res) => {
   }
   res.render("login_company.ejs", { login: a });
 });
-app.get("/NewJobPost",(req, res) => {
-  res.render("NewJobPost.ejs");
+app.get("/NewJobPost",async(req, res) => {
+  const query = `SELECT company_name FROM company WHERE comapny_email = $1`;
+  const value = [req.session.email];
+  try {
+    const result = await db.query(query, value);
+
+
+   console.log("succesfully more info");
+   res.render("NewJobPost.ejs",{newjob:result});
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+ 
 });
 
 app.get("/moreinfo", async(req, res) => {
@@ -119,16 +133,20 @@ app.get("/moreinfo", async(req, res) => {
     FROM skill_set
    WHERE user_account_id = $1`;
 
+   const query5 = `SELECT company_name FROM company WHERE comapny_email = $1`;
+  const value2 = [req.session.email];
+
 
   try {
     const result1 = await db.query(query1, value);
     const result2 = await db.query(query2, value);
     const result3 = await db.query(query3, value);
     const result4 = await db.query(query4, value);
+    const result5 = await db.query(query5, value2);
 
 
    console.log("succesfully more info");
-   res.render("More_info.ejs",{name:result1,edu:result2 , exp : result3 , skill: result4});
+   res.render("More_info.ejs",{name:result1,edu:result2 , exp : result3 , skill: result4,cname:result5});
   } catch (error) {
     // console.error("Error checking email:", error);
     
@@ -145,12 +163,16 @@ app.get("/candidate", async(req, res) => {
    WHERE j.job_post_id = $1`;
   const value = [id];
 
+  const query5 = `SELECT company_name FROM company WHERE comapny_email = $1`;
+  const value2 = [req.session.email];
+
 
   try {
     const result1 = await db.query(query, value);
+    const result5 = await db.query(query5, value2);
 
    console.log("succesfully find name");
-   res.render("candidates_applied.ejs",{jobs:result1});
+   res.render("candidates_applied.ejs",{jobs:result1,cname:result5});
   } catch (error) {
     // console.error("Error checking email:", error);
     

@@ -71,95 +71,38 @@
       
 
       <div class="box-container" id  = "box-container">
-         
+         <% for (let j =0 ;j<i+3 && j <jobs.rows.length ;j++) {%>
          <div class="box">
             <div class="company">
                <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
                <div>
-                  <h3><%=jobs.rows[i].company_name%></h3>
-                  <% let a = time(jobs.rows[i].created_date) %>
+                  <h3><%=jobs.rows[j].company_name%></h3>
+                  <% let a = time(jobs.rows[j].created_date) %>
                   <p><%=a%></p>
                </div>
             </div>
-            <h3 class="job-title"><%=jobs.rows[i].title%></h3>
+            <h3 class="job-title"><%=jobs.rows[j].title%></h3>
             <p class="location"><i class="fa-solid fa-location-dot"></i><span>
-               <% for(let j = 0 ; j<jobs.rows[i].city.length ;j++){%>
-               <%=jobs.rows[i].city[j]%>
-            <%}%>
+               <% for(let k = 0 ; k<jobs.rows[j].city.length ;k++){%>
+                  <%=jobs.rows[j].city[k]%>
+                  <%}%>
             <div class="tags">
-               <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i].salary%></span></p>
-               <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i].job_type%></span></p>
+               <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[j].salary%></span></p>
+               <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[j].job_type%></span></p>
                
             </div>
             <div class="flex_btn">
-               <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id; %>
+               <% let v = '/jobDescription?jobId=' + jobs.rows[j].job_post_id; %>
                <a href=<%=v%> class="btn">view details</a>
                <button type="submit" class="far fa-heart"></button>
             </div>
          </div>
-         <%if(i+1<jobs.rowCount){%>
-         <div class="box">
-            <div class="company">
-               <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
-               <div>
-                  <h3><%=jobs.rows[i+1].company_name%></h3>
-                  <% let a = time(jobs.rows[i+1].created_date) %>
-                  <p><%=a%></p>
-               </div>
-            </div>
-            <h3 class="job-title"><%=jobs.rows[i+1].title%></h3>
-            <p class="location"><i class="fa-solid fa-location-dot"></i><span>
-               <% for(let j = 0 ; j<jobs.rows[i+1].city.length ;j++){%>
-                  <%=jobs.rows[i+1].city[j]%>
-               <%}%>
-            </span></p>
-            <div class="tags">
-               <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+1].salary%></span></p>
-               <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+1].job_type%></span></p>
-               
-            </div>
-
-            <div class="flex_btn">
-               <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id; %>
-               <a href=<%=v%> class="btn">view details</a>
-               <button type="submit" class="far fa-heart"></button>
-            </div>
-         </div>
-         <%}%>
-         <%if(i+2<jobs.rowCount){%>
-            <div class="box">
-               <div class="company">
-                  <img src="https://t4.ftcdn.net/jpg/05/13/72/29/360_F_513722905_SgxiGdjQZsdvP4ODmERsQGgW2bUwj1lT.jpg" alt="">
-                  <div>
-                     <h3><%=jobs.rows[i+2].company_name%></h3>
-                     <% let a = time(jobs.rows[i+2].created_date) %>
-                     <p><%=a%></p>
-                  </div>
-               </div>
-               <h3 class="job-title"><%=jobs.rows[i+2].title%></h3>
-               <p class="location"><i class="fa-solid fa-location-dot"></i><span>
-                  <% for(let j = 0 ; j<jobs.rows[i+2].city.length ;j++){%>
-                  <%=jobs.rows[i+2].city[j]%>
-               <%}%>
-               </span></p>
-               <div class="tags">
-                  <p><i class="fa-solid fa-indian-rupee-sign"></i><span><%=jobs.rows[i+2].salary%></span></p>
-                  <p><i class="fa-solid fa-briefcase"></i><span><%=jobs.rows[i+2].job_type%></span></p>  
-               </div>
-
-               <div class="flex_btn">
-                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id; %>
-                  <a href=<%=v%> class="btn">view details</a>
-                  <button type="submit" class="far fa-heart"></button>
-               </div>
-            </div>
-         <%}%>
-      
-      </div>
-   </section>
-      
+        
+        
       <%}%>
-
+      </div>
+      <%}%>
+   </section>
 
 
 
