@@ -31,9 +31,9 @@ html{
   scroll-padding-top: 7rem;
   scroll-behavior: smooth;
 }
-body{
+/* body{
   background-color: var(--light-bg);
-}
+} */
 section{
   padding: 2rem;
   margin: 0 auto;
@@ -149,8 +149,8 @@ section{
 
 
 .profile{
-  min-height: 100vh;
-  background-color: #eee;
+  /* min-height: 100vh; */
+  /* background-color: #eee; */
   display: flex;
   align-items: center;
   justify-content: center;

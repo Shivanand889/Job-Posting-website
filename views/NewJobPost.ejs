@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Your Profile</title>
-    <script src="https://kit.fontawesome.com/427a1571ad.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./NewJobPost.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <link rel="stylesheet" href="./Student_after_login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <title>Post a Job</title>
+    <link rel="stylesheet" href="NewJobPost.css">
+    <link rel="stylesheet" href="Student_after_login.css">
 </head>
 <body>
     
@@ -15,19 +14,22 @@
         <section class="flex">
 
            <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
-           <a href="#" class="logo">
-              <i class="fa-solid fa-briefcase"></i>
-              Job Search portal
+           <a href="#" class="logo client-logo">
+              <i class="fa-solid fa-building"></i>
+            
            </a>
            <nav class="navbar">
-              <a href="/jobs">Home</a>
-              <a href="/about">about</a>
-              <a href="/contact">contact us</a>
-              <!-- <button class="btn">Post a new Job</button> -->
+              <a  href="/jobs">Home</a>
+              <!-- <a  href="#">Jobs</a> -->
+              <a  href="/about">About us</a>
+              <a  href="/contact">Contact us</a>
+              <!-- <button class="btn clientbtn"><a class="postjob-btn" href="/NewJobPost" >Post a new Job</a></button> -->
+    
            </nav>
         </section>
 
      </header>
+
 
 
 <div class="profile">
@@ -86,12 +88,11 @@
                             <!-- <textarea name="" id="" cols="50" rows="5" placeholder="Write job Description here"></textarea> -->
                             <input type="text" cols="50" rows="5" name="description" placeholder="Job description" required>
                         </div>
+                       
                     </div>
+                    <button class="btn clientbtn postbtn" type="submit">Submit</button>
                 </div>
-             
-                    </div>
-                </div>
-                <button type="submit">Submit</button>
+               
             </div>
             
         </form>
@@ -103,47 +104,33 @@
 
 
 <footer class="footer">
-    <section class="grid">
+    <div class="grid">
           <div class="box">
              <h3>Quick Links</h3>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>Home</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>about</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>All jobs</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>contact us</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>Filter search</a>
+             <a href="#"><i class="fa-solid fa-angle-right"> </i> Home</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> About us</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> All jobs</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> Contact us</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> Filter search</a>
           </div>
 
           <div class="box">
              <h3>extra links</h3>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>account</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>login</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>register</a>
-             <a href="#"><i class="fa-solid fa-angle-right"></i>dashboard</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> Account</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> Login</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> Register</a>
+             <a href="#"><i class="fa-solid fa-angle-right"></i> Dashboard</a>
           </div>
 
           <div class="box">
              <h3>Follow us</h3>
-             <a href="#"><i class="fa-brands fa-instagram"></i>instagram</a>
-             <a href="#"><i class="fa-brands fa-facebook"></i>facebook</a>
-             <a href="#"><i class="fa-brands fa-x-twitter"></i>Twitter</a>
+             <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+             <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+             <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
           </div>
 
-    </section>
+    </div>
  </footer>
-  <!-- <script>
 
-     window.onscroll = function() {myFunction()};
-
-     var navbar = document.getElementById("navbar");
-     var sticky = navbar.offsetTop;
-     function myFunction() {
-        if (window.pageYOffset >= sticky) {
-            navbar.classList.add("sticky")
-        } else {
-            navbar.classList.remove("sticky");
-        }
-     }
-
-  </script> -->
 </body>
 </html>

@@ -22,20 +22,27 @@
               <h3><%=jobs2.rows[0].company_name%></h3>
            </a>
            <nav class="navbar">
-              <a  href="#">Home</a>
+              <a  href="/jobs">Home</a>
               <!-- <a  href="#">Jobs</a> -->
               <a  href="/about">About us</a>
               <a  href="/contact">Contact us</a>
               <button class="btn clientbtn"><a class="postjob-btn" href="/NewJobPost" >Post a new Job</a></button>
               <% let v1 = "/deleteaccount?name=" + jobs2.rows[0].company_name ; %>
-              <button class="btn clientbtn"><a class="postjob-btn" href=<%=v1%> >Delete Account</a></button>
+              <button class="btn clientbtn ss"><a class="postjob-btn" href=<%=v1%> >Delete Account</a></button>
+              <div class="btn dropdown" style="margin-top: 0;">
+                <!-- <button class="dropbtn">Dropdown</button> -->
+                <i class="fa-regular fa-user"></i>
+                <div class="dropdown-content">
+                  <a href="/">Logout</a>
+                </div>
+              </div>
            </nav>
         </section>
 
      </header>
 
 
-     <section class="job-container">
+     <section class="job-container client-home-container">
       <h1 class="heading">All Jobs</h1>
       <% for(let i = 0; i < jobs.rows.length; i += 3) { %>
           <div class="box-container">

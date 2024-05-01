@@ -12,28 +12,28 @@
     <title>More Info about candidates</title>
 </head>
 <body>
-    <header class="header">
+
+     <header class="header">
         <section class="flex">
 
            <div id="menu-btn" class="fa-solid fa-bars-staggered"></div>
-           <a href="#" class="logo">
-              <i class="fa-solid fa-briefcase"></i>
-              Job Search portal
+           <a href="#" class="logo client-logo">
+              <i class="fa-solid fa-building"></i>
+    
            </a>
            <nav class="navbar">
-              <a href="/jobs">Home</a>
-              <a href="/about">about</a>
-              <a href="/contact">contact us</a>
+              <a  href="/jobs">Home</a>
+              <a  href="/about">About us</a>
+              <a  href="/contact">Contact us</a>
            </nav>
-           
         </section>
 
      </header>
 
 
-     <section class="job-details">
+     <section class="job-details client-home-container">
         <h1 class="heading">Full Information </Name></h1>
-        <div class="details">
+        <div class="details details-box">
             <div class="jon-info">
                 <h3><%= name.rows[0].name %></h3>
                 <!-- <a href="view_company.html">IT Google</a> -->
@@ -53,7 +53,7 @@
                 <h3>Education</h3>
                 <% for(let i = 0; i < edu.rows.length; i += 1) { %>
                     <%let v = "Education " + (i+1) ; %>
-                    <h3><%=v%></h3>
+                    <h2><%=v%></h2>
                     <% var s= new Date(edu.rows[i].starting_date).toLocaleDateString('en-GB');%>
                     <% var e= new Date(edu.rows[i].completion_date).toLocaleDateString('en-GB');%>
                 <li>Institue Name :  <span><%= edu.rows[i].institute_university_name%>(<%=s %>-<%=e%>)</span></li>
@@ -67,7 +67,7 @@
                 <h3>Experience</h3>
                 <% for(let i = 0; i < exp.rows.length; i += 1) { %>
                     <%let v = "Experience " + (i+1) ; %>
-                    <h3><%=v%></h3>
+                    <h2><%=v%></h2>
                     <% var s= new Date(exp.rows[i].start_date).toLocaleDateString('en-GB');%>
                     <% var e= new Date(exp.rows[i].end_date).toLocaleDateString('en-GB');%>
                 <li>Company Name :  <span><%= exp.rows[i].company_name%>(<%=s %>-<%=e%>)</span></li>
@@ -110,36 +110,33 @@
      </section>
 
 
-
-
-
      <footer class="footer">
-        <section class="grid">
+        <div class="grid">
               <div class="box">
                  <h3>Quick Links</h3>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>Home</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>about</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>All jobs</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>contact us</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>Filter search</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"> </i> Home</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> About us</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> All jobs</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Contact us</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Filter search</a>
               </div>
 
               <div class="box">
                  <h3>extra links</h3>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>account</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>login</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>register</a>
-                 <a href="#"><i class="fa-solid fa-angle-right"></i>dashboard</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Account</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Login</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Register</a>
+                 <a href="#"><i class="fa-solid fa-angle-right"></i> Dashboard</a>
               </div>
 
               <div class="box">
                  <h3>Follow us</h3>
-                 <a href="#"><i class="fa-brands fa-instagram"></i>instagram</a>
-                 <a href="#"><i class="fa-brands fa-facebook"></i>facebook</a>
-                 <a href="#"><i class="fa-brands fa-x-twitter"></i>Twitter</a>
+                 <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                 <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                 <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
               </div>
 
-        </section>
+        </div>
      </footer>
 </body>
 </html>

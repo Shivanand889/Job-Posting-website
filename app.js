@@ -30,9 +30,9 @@ module.exports = { hashPassword };
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "dbms_project",
-  password: "Shiva#$098", // add your password
-  port: 4000,
+  database: "Job",
+  password: "7668", // add your password
+  port: 5432,
 });
 db.connect();
 
@@ -1092,6 +1092,6 @@ app.post("/apply", async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 });
-app.listen(7000, function () {
+app.listen(3000, function () {
   console.log("Server start succesfully");
 });
