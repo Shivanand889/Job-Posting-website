@@ -110,7 +110,7 @@ async function filters(checkedValues , checkedLocation ,checkedCompany , checked
         <div class="box-container" id="jobContainer">
       `;
       for (let j = i; j < Math.min(i + 3, jobs.length); j++) {
-        let v = '/jobDescription?jobId=' + jobs[j].job_post_id ;
+        let v = '/jobDescription?jobId=' + jobs[j].job_post_id + '&id=' + id ;
         jobHtml += `
           <div class="box">
             <div class="company">

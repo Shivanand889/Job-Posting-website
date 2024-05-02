@@ -91,7 +91,7 @@
                             <span class="extra-title">Education <%=i+1%></span>
                             <button class="edit-btn extra-edit-btn" onclick = "editEducation(this)" val = <%=id%> val1=<%=educate.rows[0].id%>> <i class="fa fa-edit"></i></button> 
                             <% let v5 = '/delEducation?id=' + id + '&ed_id=' + educate.rows[i].id %> 
-                            <a href = <%=v5%>><i class="fa fa-trash"></i></a>
+                            <a class = "trash-btn" href = <%=v5%>><i class="fa fa-trash"></i></a>
                         </div>
                         <div class="fields">
                             <div class="input-field">
@@ -136,7 +136,7 @@
                             <span class="extra-title">Experience <%=i+1%></span>
                             <button class="edit-btn extra-edit-btn" onclick = "editExperience(this)" val = <%=id%> val1=<%=exp.rows[i].id%>> <i class="fa fa-edit"></i></button> 
                             <% let v5 = '/delExperience?id=' + id + '&ex_id=' + exp.rows[i].id %> 
-                            <a href = <%=v5%>><i class="fa fa-trash"></i></a>
+                            <a class = "trash-btn" href = <%=v5%>><i class="fa fa-trash"></i></a>
                         </div>
                         <div class="fields">
                             <div class="input-field">
@@ -193,7 +193,7 @@
                                 <%for(let i = 0 ; i<skill.rowCount ;i++){%>
                                     <li class ='skill-display'><p class="skill input"><%=skill.rows[i].skill_name%>
                                         <% let v5 = '/delSkill?id=' + id + '&sk_id=' + skill.rows[i].id %> 
-                                        <a href = <%=v5%>><i class="fa fa-trash"></i></a></p></li>
+                                        <a class = "skill-trash-btn" href = <%=v5%>><i class="fa fa-trash"></i></a></p></li>
                                 <%}%>
                             </ul>
                         </div>  

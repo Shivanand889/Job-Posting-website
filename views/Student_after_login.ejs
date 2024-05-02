@@ -221,7 +221,7 @@ the redirecting pages are
                   
                </div>
                <div class="flex_btn">
-                  <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id; %>
+                  <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id + '&id=' + id ; %>
                   <a href=<%=v%> class="btn">view details</a>
                   <button type="submit" class="far fa-heart"></button>
                </div>
@@ -249,7 +249,7 @@ the redirecting pages are
                </div>
 
                <div class="flex_btn">
-                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id; %>
+                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id + '&id=' + id; %>
                   <a href=<%=v%> class="btn">view details</a>
                   <button type="submit" class="far fa-heart"></button>
                </div>
@@ -278,7 +278,7 @@ the redirecting pages are
                   </div>
    
                   <div class="flex_btn">
-                     <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id; %>
+                     <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id + '&id=' + id; %>
                      <a href=<%=v%> class="btn">view details</a>
                      <button type="submit" class="far fa-heart"></button>
                   </div>

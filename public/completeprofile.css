@@ -354,3 +354,31 @@ color:#333;
   color :red ;
   
 }
+
+.trash-btn{
+  font-size: 12px;
+  width: 40px;
+  height: 40px;
+  color: black;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-right: 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.trash-btn:hover {
+  background-color: var(--light-bg);
+}
+
+.skill-trash-btn{
+  color: black;
+  font-size: 12px;
+  margin-left: 20px;
+}
+
+.skill-trash-btn:hover{
+color:red;
+}

@@ -29,7 +29,7 @@
             <% let v1 = '/jobSeekerfilters?id=' +id ; %>
             <a href=<%=v1%>>Home</a>
             <% let v = '/appliedJobs?id=' +id; %>
-            <a href=<%=v%>>Jobs</a>
+            <a href=<%=v%>>Applied Jobs</a>
             <a href="/about">About us</a>
             <a href="/contact">Contact us</a>
             <div class="btn dropdown" style="margin-top: 0;">
@@ -66,7 +66,7 @@
          <% }%>
          <%}%>
      <section class="job-container client-home-container" id="jobContainer">
-      <h1 class="heading">Latest Jobs</h1>
+      <h1 class="heading">Jobs Matched by Skill</h1>
       <% for (let i =0 ;i <jobs.rows.length ;i=i+3) {%>
       <div class="box-container" id  = "box-container">
          
@@ -90,7 +90,7 @@
                
             </div>
             <div class="flex_btn">
-               <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id; %>
+               <% let v = '/jobDescription?jobId=' + jobs.rows[i].job_post_id + '&id=' + id; %>
                <a href=<%=v%> class="btn">view details</a>
                <button type="submit" class="far fa-heart"></button>
             </div>
@@ -118,7 +118,7 @@
             </div>
 
             <div class="flex_btn">
-               <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id; %>
+               <% let v = '/jobDescription?jobId=' + jobs.rows[i+1].job_post_id + '&id=' + id; %>
                <a href=<%=v%> class="btn">view details</a>
                <button type="submit" class="far fa-heart"></button>
             </div>
@@ -147,7 +147,7 @@
                </div>
 
                <div class="flex_btn">
-                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id; %>
+                  <% let v = '/jobDescription?jobId=' + jobs.rows[i+2].job_post_id + '&id=' + id; %>
                   <a href=<%=v%> class="btn">view details</a>
                   <button type="submit" class="far fa-heart"></button>
                </div>

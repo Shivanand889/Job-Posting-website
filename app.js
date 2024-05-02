@@ -362,12 +362,24 @@ app.post("/sign_c", async (req, res) => {
   // Check if email already exists
   console.log(123)
   const emailCheckQuery = `SELECT * FROM company WHERE comapny_email = $1`;
+  const company_nameCheckQuery = `SELECT * FROM company WHERE company_name = $1`;
   const emailCheckValues = [email];
   try {
     const emailCheckResult = await db.query(emailCheckQuery, emailCheckValues);
     if (emailCheckResult.rows.length > 0) {
       console.log("Email already exists");
-      return res.redirect("back");
+      return res.status(500).send("Email already exist");
+    }
+  } catch (error) {
+    console.error("Error checking email:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+  const nameCheckValues = [Comapny_name];
+  try {
+    const emailCheckResult = await db.query(company_nameCheckQuery, nameCheckValues);
+    if (emailCheckResult.rows.length > 0) {
+      console.log("Comapny already registered");
+      return res.status(500).send("Comapny already registered");
     }
   } catch (error) {
     console.error("Error checking email:", error);
@@ -419,6 +431,7 @@ app.get("/about", (req, res) => {
 app.get("/jobDescription", async (req, res) => {
   var Id = req.query.jobId;
   console.log(Id);
+  var id1 = req.query.id ;
   const q = `SELECT c.company_name,
     jp.id AS job_post_id,
     jp.job_description,
@@ -439,18 +452,18 @@ app.get("/jobDescription", async (req, res) => {
     GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
   const q1 = `select email from user_account 
                 join job_post_activity on user_account.id= job_post_activity.user_account_id
-                where  user_account.email= $1 and job_post_activity.job_post_id = $2`;
+                where  user_account.id= $1 and job_post_activity.job_post_id = $2`;
   try {
     console.log(req.session.email);
     const result = await db.query(q);
-    const result1 = await db.query(q1, [req.session.email, Id]);
+    const result1 = await db.query(q1, [id1, Id]);
     // console.log(1) ;
     // console.log(result1) ;
     req.session.jobs = result;
     res.render("view_job.ejs", {
       jobs: result,
       count: result1.rowCount,
-      id: Id,
+      id: id1,
     });
   } catch (error) {
     // console.error("Error checking email:", error);
@@ -479,7 +492,8 @@ app.get("/viewAllJobs", async (req, res) => {
                     LEFT JOIN Job_location jl ON jp.id = jl.job_post_id
                     LEFT JOIN Skill_set ss ON jp.id = ss.job_post_id
                     and ss.isCompany = 1
-                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary `;
+                    GROUP BY c.company_name, jp.id, jp.job_description, jp.salary 
+                    order by jp.created_date desc , jp.salary desc`;
 
   try {
     const result = await db.query(query);
@@ -855,7 +869,7 @@ app.post("/signup", async (req, res) => {
     const emailCheckResult = await db.query(emailCheckQuery, emailCheckValues);
     if (emailCheckResult.rows.length > 0) {
       console.log("Email already exists");
-      return res.redirect("back");
+      return res.status(500).send("Email already exist");
     }
   } catch (error) {
     console.error("Error checking email:", error);
@@ -887,7 +901,8 @@ app.post("/addEducation", async (req, res) => {
   let cgpa = req.body.cgpa;
   if (new Date(start_date) >= new Date(end_date)) {
     console.log("start_date should be before end_date");
-    return res.status(400).json({ error: "start_date should be before end_date" });
+    return res.status(400).send("start_date should be before end_date");
+   
   }
   if(cgpa<0 || cgpa>10){
     console.log("cgpa should be between 0 to 10");
@@ -920,7 +935,7 @@ app.post("/addExperience", async (req, res) => {
 
   if (new Date(start_date) >= new Date(end_date)) {
     console.log("start_date should be before end_date");
-    return res.status(400).json({ error: "start_date should be before end_date" });
+    return res.status(400).send("start_date should be before end_date");
   }
   const query = `insert into experience_detail (user_account_id,start_date, end_date,
               job_title, company_name ,job_location_country, job_location_city, description) values($1,$2,$3,$4,$5,$6,$7,$8)`;
@@ -1004,7 +1019,8 @@ app.post("/editEducation", async (req, res) => {
   let cgpa = req.body.cgpa;
   if (new Date(start_date) >= new Date(end_date)) {
     console.log("start_date should be before end_date");
-    return res.status(400).json({ error: "start_date should be before end_date" });
+    return res.status(400).send("start_date should be before end_date") ;
+     
   }
   if(cgpa<0 || cgpa>10){
     console.log("cgpa should be between 0 to 10");
@@ -1041,7 +1057,7 @@ app.post("/editExperience", async (req, res) => {
   let city = req.body.city;
   if (new Date(start_date) >= new Date(end_date)) {
     console.log("start_date should be before end_date");
-    return res.status(400).json({ error: "start_date should be before end_date" });
+    return res.status(400).send("start_date should be before end_date") ;
   }
   const query = `UPDATE experience_detail 
                   SET company_name = $1, job_title = $2, description = $3, start_date = $4, 
@@ -1150,19 +1166,20 @@ app.post("/filters", async (req, res) => {
   }
 });
 app.post("/apply", async (req, res) => {
-  id = req.query.jobId;
+  var id = req.query.jobId;
   const q = `insert into job_post_activity (user_account_id , job_post_id)
                 values($1 , $2)`;
-  const q1 = `select id from user_account where email =  $1`;
+  // const q1 = `select id from user_account where email =  $1`;
+  var id1 = req.query.id ;
   try {
     // console.log(req.session.email)
-    const result1 = await db.query(q1, [req.session.email]);
-    await db.query(q, [result1.rows[0].id, id]);
+    // const result1 = await db.query(q1, [req.session.email]);
+    await db.query(q, [id1, id]);
 
     // console.log(1) ;
     // console.log(result1) ;
     // req.session.jobs = result ;
-    res.redirect(`/jobDescription?jobId=${id}`);
+    res.redirect(`/jobDescription?jobId=${id}&id=${id1}`);
   } catch (error) {
     // console.error("Error checking email:", error);
     console.log(error);

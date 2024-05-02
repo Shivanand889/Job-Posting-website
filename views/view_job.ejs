@@ -47,7 +47,7 @@
        <nav class="navbar">
           <a href="/jobSeekerfilters">Home</a>
           <% let a = '/appliedJobs?id=' +id; %>
-          <a href=<%=a%>>Jobs</a>
+          <a href=<%=a%>>Applied Jobs</a>
           <a href="/about">About us</a>
           <a href="/contact">Contact us</a>
           <div class="btn dropdown" style="margin-top: 0;">
@@ -79,36 +79,7 @@
                     <%}%> 
                 </p>
             </div>
-            <div class="basic-details">
-                <h3>Salary</h3>
-                <p><%=jobs.rows[0].salary%></p>
-                <h3>benefits</h3>
-                <p>Work from home, health insurance</p>
-                <h3>Work type</h3>
-                <p><%=jobs.rows[0].job_type%></p>
-                <h3>Schedule</h3>
-                <p>Day shift</p>
-            </div>
-            <ul>
-                <h3>requirements</h3>
-                <div class="requirements">
-                    <li>education: <span>graduate</span></li>
-                    <li>age: <span>18+</span></li>
-                    <li>language: <span>hindi , english</span></li>
-                    <li>experience: <span>3+ years</span></li>
-                </div>
-               
-            </ul>
-            <ul>
-                <h3>qualifications</h3>
-                <div class="requirements">
-                    <li>Bachelor's </li>
-                <li>PHP: 1 year experience</li>
-                <li>Web Design: Both Frontend and Backend</li>
-                <li>WordPress: 1 year</li>
-                <li>Total work: 3 years</li>
-                </div>  
-            </ul>
+            
             <ul>
                 <h3>skills</h3>
                 <div class="requirements">
@@ -128,15 +99,11 @@
                     <p>
                         <%=jobs.rows[0].job_description%>
                     </p>
-                    <ul>
-    
-                        <li>Hiring 2 candidates for this role</li>
-                        <li><%=time(jobs.rows[0].created_date)%></li>
-                    </ul>
+                   
                 </div>
                 
             </div>
-            <% let v = '/apply?jobId=' + jobs.rows[0].job_post_id ; %>
+            <% let v = '/apply?jobId=' + jobs.rows[0].job_post_id +'&id='+id ; %>
             <form action= <%=v%> method="post" class="flex-btn">
                 <%if(count == 0){%>
                     <input type="submit" value="apply now" name="apply" id = "apply" class="btn" >
