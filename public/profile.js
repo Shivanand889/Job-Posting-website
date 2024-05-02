@@ -113,19 +113,59 @@ async function editExperience(obj) {
     // window.location.href = '/editeducationdetail'; 
 }
 
-async function editSkill(obj) {
+async function delExperience(obj) {
     
     try {
         const id = obj.getAttribute('val');
-        
+        const ex_id = obj.getAttribute('val1');
         console.log(id) ;
-        await fetch('/editSkillForm?id=' + id , {
+        await fetch('/delExperience?id=' + id + '&ex_id=' + ex_id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
-        let newPageURL = '/editSkillForm?id=' + id  ;
+        let newPageURL = '/JobSeekerDetails?id=' + id  ;
+        window.location.href = newPageURL;
+    } catch (error) {
+        console.error(error);
+    }
+    // window.location.href = '/editeducationdetail'; 
+}
+
+async function delEducation(obj) {
+    
+    try {
+        const id = obj.getAttribute('val');
+        const ed_id = obj.getAttribute('val1');
+        console.log(id) ;
+        await fetch('/delEducation?id=' + id + '&ed_id=' + ed_id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+        let newPageURL = '/JobSeekerDetails?id=' + id  ;
+        window.location.href = newPageURL;
+    } catch (error) {
+        console.error(error);
+    }
+    // window.location.href = '/editeducationdetail'; 
+}
+
+async function delSkill(obj) {
+    
+    try {
+        const id = obj.getAttribute('val');
+        const sk_id = obj.getAttribute('val1');
+        console.log(id) ;
+        await fetch('/delSkill?id=' + id + '&sk_id=' + sk_id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+        let newPageURL = '/delSkill?id=' + id + '&sk_id=' + sk_id ;
         window.location.href = newPageURL;
     } catch (error) {
         console.error(error);

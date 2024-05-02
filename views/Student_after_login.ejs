@@ -53,10 +53,10 @@ the redirecting pages are
                <a href="#">Home</a>
                <% let v = '/appliedJobs?id=' +id; %>
                <a href=<%=v%>>Applied Jobs</a>
-               <a href="/about">About us</a>
-               <a href="/contact">Contact us</a>
                <% let v3 = '/Prefferdjobs?id=' +id; %>
                <a href=<%=v3%>>Prefferd Jobs</a>
+               <a href="/about">About us</a>
+               <a href="/contact">Contact us</a>
                <div class="btn dropdown" style="margin-top: 0;">
                   <!-- <button class="dropbtn">Dropdown</button> -->
                   <i class="fa-regular fa-user"></i>
@@ -197,7 +197,7 @@ the redirecting pages are
       </section>
 
       <section class="job-container" id="jobContainer">
-         <h1 class="heading">Latest Jobs</h1>
+         <h1 class="heading">High Paying Jobs</h1>
          <% for (let i =0 ;i <jobs.rows.length ;i=i+3) {%>
          <div class="box-container" id  = "box-container">
             

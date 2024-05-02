@@ -30,9 +30,9 @@ module.exports = { hashPassword };
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "Job2",
-  password: "7668", // add your password
-  port: 5432,
+  database: "dbms_project",
+  password: "Shiva#$098", // add your password
+  port: 4000,
 });
 db.connect();
 
@@ -48,7 +48,7 @@ app.get("/deleteaccount", async(req, res) => {
   try {
     
      await db.query(q, val);
-   res.redirect("/");
+      res.redirect("/");
   } catch (error) {
     // console.error("Error checking email:", error);
     
@@ -319,7 +319,7 @@ where comapny_email = $1`;
 app.post("/login_c", async (req, res) => {
   const email = req.body.email;
   var password = req.body.password;
-  // password = hashPassword(password);
+  password = hashPassword(password);
   var q = `SELECT * FROM company WHERE comapny_email = $1`;
   var x = [email];
 
@@ -355,7 +355,7 @@ app.post("/login_c", async (req, res) => {
 app.post("/sign_c", async (req, res) => {
   const email = req.body.email;
   
-  const password =req.body.password;
+  const password =hashPassword(req.body.password) ;
   const stream = req.body.stream;
   const Comapny_name = req.body.Comapny_name;
  
@@ -573,22 +573,76 @@ app.get("/editExperienceForm", async (req, res) => {
   }
 });
 
-app.get("/editSkillForm", async (req, res) => {
+app.get("/delExperience", async (req, res) => {
   console.log(10);
   var Id = req.query.id;
+  var Ex_id = req.query.ex_id;
+  console.log(Ex_id);
   // let name = "ab" ;
-  const q = `select * from skill_set where user_account_id = $1 and isCompany=$2 `;
+  const q = `delete from experience_detail where id = $1`;
   try {
-    let val = [Id, 0];
+    let val = [Ex_id];
     const result = await db.query(q, val);
     // console.log(result.rows[0].date_of_birth)
-    let s = "";
-    for (let i = 0; i < result.rowCount; i++) {
-      s = s + result.rows[i].skill_name + " ";
-    }
-    s = s.slice(0, -1);
-    console.log(s);
-    return res.render("editSkillform.ejs", { id: Id, skill: s });
+   
+    let v4 = '/JobSeekerDetails?id=' + Id ; 
+    res.redirect(v4);
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/delEducation", async (req, res) => {
+  console.log(10);
+  var Id = req.query.id;
+  var Ed_id = req.query.ed_id;
+  console.log(Ed_id);
+  // let name = "ab" ;
+  const q = `delete from Education_detail where id = $1`;
+  try {
+    let val = [Ed_id];
+    const result = await db.query(q, val);
+    // console.log(result.rows[0].date_of_birth)
+    let v4 = '/JobSeekerDetails?id=' + Id ; 
+    res.redirect(v4);
+  } catch (error) {
+    // console.error("Error checking email:", error);
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/delSkill", async (req, res) => {
+  console.log(10);
+  var Id = req.query.id;
+
+  // const query = `SELECT id, email, date_of_birth, gender, contact_number, name from user_account
+  // WHERE id= $1 `;
+  // const q1 = `select * from education_detail where  user_account_id= $1 order by id`;
+  // const q2 = `select * from experience_detail  WHERE user_account_id= $1 order by id`;
+  // const q3 = `select * from skill_set WHERE user_account_id= $1 and isCompany = 0 order by id`;
+
+  var Sk_id = req.query.sk_id;
+  console.log(Sk_id);
+  // let name = "ab" ;
+  const q = `delete from skill_set where id = $1`;
+  try {
+    let val = [Sk_id];
+    const result = await db.query(q, val);
+    // console.log(result.rows[0].date_of_birth)
+    // var val1 = [Id];
+    // // console.log(Id) ;
+    // req.session.r1 = await db.query(query, val1);
+    // console.log(req.session.r1) ;
+    // req.session.r2 = await db.query(q1, val1);
+    // // console.log(Id) ;
+    // req.session.r3 = await db.query(q2, val1);
+    // // console.log(Id) ;
+    // req.session.r4 = await db.query(q3, val1);
+    let v4 = '/JobSeekerDetails?id=' + Id ; 
+    res.redirect(v4);
   } catch (error) {
     // console.error("Error checking email:", error);
     console.log(error);
@@ -598,7 +652,8 @@ app.get("/editSkillForm", async (req, res) => {
 
 app.get("/JobSeekerDetails", async (req, res) => {
   var Id = req.query.id;
-  // console.log(11) ;
+  console.log(1000) ;
+  console.log(Id) ;
   const query = `SELECT id, email, date_of_birth, gender, contact_number, name from user_account
   WHERE id= $1 `;
   const q1 = `select * from education_detail where  user_account_id= $1 order by id`;
@@ -608,7 +663,7 @@ app.get("/JobSeekerDetails", async (req, res) => {
     var val = [Id];
     // console.log(Id) ;
     req.session.r1 = await db.query(query, val);
-    // console.log(Id) ;
+    console.log(req.session.r1) ;
     req.session.r2 = await db.query(q1, val);
     // console.log(Id) ;
     req.session.r3 = await db.query(q2, val);
@@ -753,7 +808,7 @@ app.get("/Recruiterfilters", async (req, res) => {
 app.post("/login", async (req, res) => {
   const email = req.body.email;
   var password = req.body.password;
-  // password = hashPassword(password);
+  password = hashPassword(password);
   var q = `select * from User_account where email = $1`;
   var x = [email];
   await db
@@ -788,7 +843,7 @@ app.post("/login", async (req, res) => {
 
 app.post("/signup", async (req, res) => {
   const email = req.body.email;
-  const password = req.body.password ;
+  const password = hashPassword(req.body.password) ;
   const dob = req.body.dob;
   const gender = req.body.gender;
   const number = req.body.contact;
@@ -1114,6 +1169,6 @@ app.post("/apply", async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 });
-app.listen(3000, function () {
+app.listen(7000, function () {
   console.log("Server start succesfully");
 });

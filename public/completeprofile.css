@@ -335,3 +335,22 @@ form .fields .input-field{
 .input-field input[type = "date"]:valid{
 color:#333;
 }
+
+.skill-box{
+  display: flex;
+  list-style: none;
+  
+}
+.skill-display{
+  justify-content: center;
+  align-items: center;
+}
+.del-btn{
+  margin-left: 10px;
+  cursor: pointer;
+
+}
+.del-btn:hover {
+  color :red ;
+  
+}
