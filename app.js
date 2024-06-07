@@ -6,7 +6,9 @@ const app = express();
 const crypto = require("crypto");
 const pg = require("pg");
 app.set("view engine", "ejs");
+require('dotenv').config();
 app.use(express.static("public"));
+const { createClient } = require ('@supabase/supabase-js') ;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
@@ -27,17 +29,170 @@ function hashPassword(password) {
 }
 
 module.exports = { hashPassword };
-const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "dbms_project",
-  password: "Shiva#$098", // add your password
-  port: 4000,
-});
+// const db = new pg.Client({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "dbms_project",
+//   password: "Shiva#$098", // add your password
+//   port: 4000,
+// });
+// db.connect();
+// const supabaseUrl = 'https://xjedywgolceclcmciqfn.supabase.co'
+// const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZWR5d2dvbGNlY2xjbWNpcWZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYzNDY0NDgsImV4cCI6MjAzMTkyMjQ0OH0.VsgvMda5PGXAlC-YBc4UxxbIt_ungS5HQfRxqhRTm_c"
+// const db = new pg.Client(supabaseUrl, supabaseKey);
+// db.connect();
+
+const fs = require('fs');
+// const pg = require('pg');
+const url = require('url');
+
+const config = {
+    user: "avnadmin",
+    password: "AVNS_itxFClA2Ze-JhHpuPrP",
+    host: "pg-2507167a-shivanandgarg-jandp-jobs.i.aivencloud.com",
+    port: 28666,
+    database: "defaultdb",
+    ssl: {
+        rejectUnauthorized: true,
+        ca: `-----BEGIN CERTIFICATE-----
+MIIEQTCCAqmgAwIBAgIUOe/l7VPacBj/hxHeH8Wvq2F/G94wDQYJKoZIhvcNAQEM
+BQAwOjE4MDYGA1UEAwwvY2Y2Y2Q1MjItZmNiOC00OWNmLTk3NjgtMmEzNTUwY2Y5
+OGQzIFByb2plY3QgQ0EwHhcNMjQwNjA3MDUwOTQzWhcNMzQwNjA1MDUwOTQzWjA6
+MTgwNgYDVQQDDC9jZjZjZDUyMi1mY2I4LTQ5Y2YtOTc2OC0yYTM1NTBjZjk4ZDMg
+UHJvamVjdCBDQTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAMQbD/uh
+ORIziIZEs99TnCLQU9bFWswJxdg9OE7ei+m52IYZWWomXwUqWYelKoYg7fliDdHB
+bQ2mcUzeCaM7fSuJlMT+2cpzi+I9usRXMzkHsK5msVOvJBjib5v/YNfU6qiDKWBv
+BwaD2lFkJw/FcNkdcx5dOIceFb3DR762+UAmIYp/07T+xK87GdKO9A0hmKCen4Jj
+bWBj4G+00zjx5RCTVJe8Rw0h2ewtf4wlIHAXHIs66JpjGIHyb4Gr2ANrOAKmjOKg
+b2+nYfLadvHrQ06kvYyK09BYEtOxYRPqlN3quUiSZB82nggyf3TBCUsCDzOaYhlx
+OwhnXyX056H29AlWy1LnUCaCjY4HRsAbfRjA/Nyz+/Gl0E53r4LCT6M0bGyd5p9u
+QtZQzyGSlQI1ty52OvjDqvA4vswuA5IvMwjfaodhQyEhv5x48MJ77fYM17lxgW4F
+DMNns2miCrsnFHiR+R+vkhSti42InJDOGMe63Jqzbm060Wz8mvSc57TlVQIDAQAB
+oz8wPTAdBgNVHQ4EFgQUuFFgX5DipO3ztX96A0yNV70iMTAwDwYDVR0TBAgwBgEB
+/wIBADALBgNVHQ8EBAMCAQYwDQYJKoZIhvcNAQEMBQADggGBAD+mIIPuiKUxrzVN
+fSpgW9exsOUop3/rXDfEsV6I6lEaO+PIn0xi0/inAejMF8hnNAnzuCBHdsjnzINg
+L0MQ8Mbp5CxiBWcITFBkZDq40bPhP8qsdiyfQ2Y33XN8ljPQqnBaviEmjORoMkeE
+kb+Bj3Mec+j/PCF4klNdBY+ajKd6Jy3+rhA3/VJb23TITKbz0GjanIRwBhhliizv
+L3bWnuxAXsaQkLxwCEuo57a7m4qICrlvDexirHRUt1ORceWXEvj74mC7YKxHh8Gk
+4mjt/0mZ/BZRINF2Inmz0oRyoA8a+FY9Eygnf1/pv4//QQRUfV2Ys+bCOpdoMX8L
+omeqJVkEOagO1dhIm9Wo1jeoIMaCqWFschnOGLVKi/sxp9RpfDMU5ZxZduBnf65r
+sEB6KaVyUNEYDaR2dgBT/KP9VNgUbxMccgYPZNwjmrlLVQLZQsG/6xWTLXPSYf2w
+z40DiDCVOnlFae5F48zPP3R8+UVdLLfkheer/NtUbyCBagcuTg==
+-----END CERTIFICATE-----`,
+    },
+};
+
+const db = new pg.Client(config);
 db.connect();
 
-// Start  ...
+
+const qu = `--user_account--
+CREATE TABLE IF NOT EXISTS User_account(
+    id SERIAL primary key,
+	name varchar(50),
+    email varchar(255),
+    password varchar(1000),
+    date_of_birth date,
+    gender varchar(50),
+    contact_number numeric(10)
+
+);
+
+--company--
+CREATE TABLE IF NOT EXISTS Company(
+    company_name varchar(255) primary key,
+    stream varchar(500),
+	comapny_email varchar(100),
+	password varchar(1000)
+   
+);
+
+
+--education_detail--
+CREATE TABLE IF NOT EXISTS Education_detail (
+    id SERIAL PRIMARY KEY,
+    user_account_id INT,
+    certificate_degree_name VARCHAR(50),
+    major VARCHAR(50),
+    institute_university_name VARCHAR(50),
+    starting_date DATE,
+    completion_date DATE,
+    cgpa NUMERIC,
+    FOREIGN KEY (user_account_id) REFERENCES User_account(id),
+    CHECK (completion_date > starting_date),
+    CHECK (cgpa >= 0 AND cgpa <= 10)
+);
+--experience_detail--
+CREATE TABLE IF NOT EXISTS Experience_detail (
+    id SERIAL PRIMARY KEY,
+    user_account_id INT,
+    is_current_job INT,
+    start_date DATE,
+    end_date DATE,
+    job_title VARCHAR(50),
+    company_name VARCHAR(100),
+    job_location_city VARCHAR(100),
+    job_location_state VARCHAR(50),
+    job_location_country VARCHAR(50),
+    description VARCHAR(4000),
+    FOREIGN KEY (user_account_id) REFERENCES User_account(id),
+    CHECK (start_date < end_date)
+);
+
+---job_post--
+CREATE TABLE IF NOT EXISTS Job_post (
+    id SERIAL PRIMARY KEY,
+    company_name varchar(255),
+    created_date DATE DEFAULT CURRENT_DATE,
+    last_date DATE,
+    title VARCHAR(100),
+    job_description VARCHAR(4000),
+    salary NUMERIC,
+    job_type VARCHAR(50),
+	application_count int default 0 ,
+    FOREIGN KEY (company_name) REFERENCES Company(company_name),
+	CHECK (created_date < last_date),
+	CHECK (salary > 0)
+   
+);
+
+--skill_set--
+CREATE TABLE IF NOT EXISTS Skill_set(
+	id SERIAL PRIMARY KEY,
+    skill_name varchar(50),
+    user_account_id int, 
+	job_post_id int ,
+    isCompany int,
+    FOREIGN KEY (user_account_id) REFERENCES User_account(id),
+    FOREIGN KEY (job_post_id) REFERENCES Job_post(id)
+);
+
+
+--job_post_activity--
+CREATE TABLE IF NOT EXISTS Job_post_activity(
+    user_account_id int,
+    job_post_id int,
+    apply_date DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT Job PRIMARY KEY (user_account_id, job_post_id),
+    foreign key (job_post_id) references Job_post(id),
+    foreign key (user_account_id) references User_account(id)
+);
+
+--job_location--
+CREATE TABLE IF NOT EXISTS Job_location(
+	id SERIAL PRIMARY KEY,
+    job_post_id int,
+    street_address varchar(100),
+    city varchar(500),
+    state varchar(500),
+    country varchar(500),
+    zip varchar(500),
+    foreign key (job_post_id) references Job_post(id)
+);
+`
+
 app.get("/", (req, res) => {
+  db.query(qu);
   res.render("landing.ejs");
 });
 app.get("/deleteaccount", async(req, res) => {
