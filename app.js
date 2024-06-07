@@ -1341,6 +1341,7 @@ app.post("/apply", async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 });
-app.listen(7000, function () {
+const port = process.env.PORT || 7000 ;
+app.listen(port, function () {
   console.log("Server start succesfully");
 });
